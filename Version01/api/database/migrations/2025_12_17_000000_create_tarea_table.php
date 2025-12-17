@@ -13,10 +13,10 @@ return new class extends Migration
         {
             Schema::create('tarea', function (Blueprint $table) {
                 $table->id()->primary();
-                $table->foreign('id_proyectos')->references('id')->('proyectos');
-                $table->foreign('id_estado')->references('id')->('estado_tarea');
-                $table->foreign('id_asignado_a')->references('id')->('usuarios');
-                $table->foreign('id_prioridad')->references('id')->('prioridad');
+                $table->foreign('id_proyectos')->references('id')->on('proyectos');
+                $table->foreign('id_estado')->references('id')->on('estado_tarea');
+                $table->foreign('id_asignado_a')->references('id')->on('usuarios');
+                $table->foreign('id_prioridad')->references('id')->on('prioridad');
                 $table->string('titulo');
                 $table->text('descripcion')->nullable();
                 $table->date('fecha_creacion');
