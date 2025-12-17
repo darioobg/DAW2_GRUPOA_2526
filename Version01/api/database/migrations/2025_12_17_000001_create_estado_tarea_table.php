@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
         {
-            Schema::create('proyectos', function (Blueprint $table) {
+            Schema::create('estado_tarea', function (Blueprint $table) {
                 $table->id()->primary();
-                $table->string('nombre', 100);
-                $table->text('descripcion')->nullable();
-                $table->string('color_fondo', 20)->nullable();
-                $table->string('imagen_fondo')->nullable();
-                // más adelante podremos añadir: id_equipo, estado, etc.
+                $table->string('nombre');
+                $table->int('orden');
                 $table->timestamps();
             });
         }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proyectos');
+        Schema::dropIfExists('estado_tarea');
     }
 };
