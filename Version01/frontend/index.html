@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="./css/main.css">
+
+  <title>TaskFlow – Tableros</title>
+</head>
+
+<body>
+
+  <!-- Usamos Bootstrap: container-fluid + row + col para el layout -->
+  <div class="container-fluid p-0">
+    <div class="row g-0 min-vh-100">
+
+      <!-- SIDEBAR -->
+      <aside class="col-2 col-lg-2 sidebar d-flex flex-column">
+        <div class="sidebar__top">
+          <div class="sidebar__logo">
+            <!-- Logo de TaskFlow -->
+            <!-- <img src="../public/assets/img/logo.png" alt="TaskFlow"> -->
+            <h2>TaskFlow</h2>
+          </div>
+
+          <nav class="sidebar__menu">
+            <h2 class="sidebar__titulo">MENÚ PRINCIPAL</h2>
+
+            <div class="sidebar__item">
+              <span class="material-icons sidebar__icon sidebar__icon--home">home</span>
+              <span>Inicio</span>
+            </div>
+
+            <div class="sidebar__item">
+              <span class="material-icons sidebar__icon sidebar__icon--tableros">dashboard</span>
+              <span>Tableros</span>
+            </div>
+
+            <div class="sidebar__item">
+              <span class="material-icons sidebar__icon sidebar__icon--tareas">task</span>
+              <span>Mis Tareas</span>
+            </div>
+
+            <div class="sidebar__item">
+              <span class="material-icons sidebar__icon sidebar__icon--equipos">groups</span>
+              <span>Equipos</span>
+            </div>
+          </nav>
+
+          <div class="sidebar__favoritos">
+            <h2 class="sidebar__titulo">FAVORITOS</h2>
+            <div class="sidebar__item">Desarrollo web</div>
+            <div class="sidebar__item">Diseño UX/UI</div>
+            <div class="sidebar__item">Marketing Q3</div>
+          </div>
+        </div>
+
+        <div class="sidebar__footer mt-auto">
+          <div class="sidebar__config">Configuración</div>
+
+          <div class="sidebar__invitar">
+            <button class="invitar__btn">Invitar Miembro</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="col-12 col-md-9 col-lg-10 contenido d-flex flex-column">
+
+        <!-- TOPBAR -->
+        <header class="topbar d-flex align-items-center justify-content-between">
+          <!-- Buscador -->
+          <div class="topbar__buscador">
+            <div class="topbar__buscar">
+              <span class="material-icons">search</span>
+              <input
+                type="text"
+                name="buscar"
+                placeholder="Buscar miembros, equipos, tareas y proyectos"
+              >
+            </div>
+          </div>
+
+          <!-- Menú superior -->
+          <nav class="topbar__menu d-none d-md-flex">
+            <span class="topbar__menu-item topbar__menu-item--activo">Reciente</span>
+            <span class="topbar__menu-item">Marcados</span>
+            <span class="topbar__menu-item">TaskFlow</span>
+          </nav>
+
+          <!-- Acciones (alertas + perfil) -->
+          <div class="topbar__acciones d-flex align-items-center gap-3">
+            <div class="topbar__alertas">
+              <span class="material-icons">notifications</span>
+              <span class="material-icons">account_circle</span>
+            </div>
+            <div class="topbar__perfil">
+              <img src="./img/1.jpg" alt="Usuario">
+            </div>
+          </div>
+        </header>
+
+        <!-- SECCIÓN TABLEROS -->
+        <div class="tableros flex-grow-1">
+
+          <!-- DESTACADOS -->
+          <section class="tableros__destacados mb-4">
+            <h2 class="tableros__titulo">Tableros Destacados</h2>
+
+            <!-- Ahora usamos grid de Bootstrap en lugar de flex manual -->
+            <div class="row g-3 destacados" id="tablerosDestacados">
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="destacado h-100">
+                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 1">
+                  <div class="destacado__nombre">
+                    <h2>Desarrollo</h2>
+                  </div>
+                  <div class="destacado__equipo">
+                    <p>Grupo 2</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="destacado h-100">
+                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 2">
+                  <div class="destacado__nombre">
+                    <h2>Diseño UX</h2>
+                  </div>
+                  <div class="destacado__equipo">
+                    <p>Equipo Creativo</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="destacado h-100">
+                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 3">
+                  <div class="destacado__nombre">
+                    <h2>Marketing Q3</h2>
+                  </div>
+                  <div class="destacado__equipo">
+                    <p>Marketing</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- MIS TABLEROS -->
+          <section class="tableros__mis">
+            <h2 class="tableros__titulo">Tus Espacios de Trabajo</h2>
+
+            <!-- También grid de Bootstrap -->
+            <div class="row g-3 mistableros" id="misTableros">
+
+              <!-- TARJETA CREAR NUEVO TABLERO -->
+              <article id="btnCrearTablero" class="mistablero mistablero--nuevo">
+                  <span class="material-icons mistablero__icono">add</span>
+                  <span class="mistablero__texto">Crear tablero</span>
+              </article>
+
+
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mistablero h-100">
+                  <img src="./img/africa.jpg" class="mistablero__imagen" alt="Tablero 1">
+                  <div class="mistablero__nombre">
+                    <h2 title="Proyecto de Desarrollo Web muy largo">Proyecto de Desarrollo Web muy largo</h2>
+
+                  </div>
+                  <div class="mistablero__miembros"></div>
+                  <div class="mistablero__fecha">
+                    <p>4 de octubre</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mistablero h-100">
+                  <img src="./img/africa.jpg" class="mistablero__imagen" alt="Tablero 2">
+                  <div class="mistablero__nombre">
+                    <h2>Proyecto DAW</h2>
+                  </div>
+                  <div class="mistablero__miembros"></div>
+                  <div class="mistablero__fecha">
+                    <p>10 de octubre</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mistablero h-100">
+                  <img src="./img/africa.jpg" class="mistablero__imagen" alt="Tablero 3">
+                  <div class="mistablero__nombre">
+                    <h2>Diseño UI</h2>
+                  </div>
+                  <div class="mistablero__miembros"></div>
+                  <div class="mistablero__fecha">
+                    <p>15 de octubre</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mistablero h-100">
+                  <img src="./img/africa.jpg" class="mistablero__imagen" alt="Tablero 4">
+                  <div class="mistablero__nombre">
+                    <h2>Marketing</h2>
+                  </div>
+                  <div class="mistablero__miembros"></div>
+                  <div class="mistablero__fecha">
+                    <p>20 de octubre</p>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+        </div> <!-- /tableros -->
+
+      </main>
+
+    </div> <!-- /row -->
+  </div> <!-- /container-fluid -->
+<!-- Modal Crear Tablero -->
+<div class="modal fade" id="modalCrearTablero" tabindex="-1" aria-labelledby="modalCrearTableroLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCrearTableroLabel">Crear nuevo tablero</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form id="formCrearTablero">
+
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label class="form-label">Nombre del tablero</label>
+            <input type="text" class="form-control" id="nombreTablero" required>
+          </div>
+
+          <!-- Color -->
+          <div class="mb-3">
+            <label class="form-label">Color de fondo</label>
+            <input type="color" class="form-control form-control-color" id="colorFondo" value="#0c6bf2">
+          </div>
+
+          <!-- Equipo -->
+          <div class="mb-3">
+            <label class="form-label">Equipo</label>
+            <input type="text" class="form-control" id="equipoTablero" placeholder="Opcional">
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btnGuardarTablero">Crear tablero</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- JS Bootstrap (si luego usas dropdowns, modals, etc.) -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Más adelante aquí irán tus scripts JS: api, ui, app -->
+  <!-- <script src="../public/assets/js/api/proyectos.api.js"></script> -->
+  <!-- <script src="../public/assets/js/ui/pintarTableros.js"></script> -->
+  <script type="module" src="../frontend/js/app.js" defer></script> 
+</body>
+
+</html>
