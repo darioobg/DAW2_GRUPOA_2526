@@ -1,0 +1,12 @@
+### Crear proyecto de prueba
+POST http://127.0.0.1:8000/api/proyectos
+Content-Type: application/json
+
+{
+  "nombre": "Proyecto DAW",
+  "descripcion": "Tablero principal del módulo",
+  "color_fondo": "#0c6bf2"
+}
+
+### Listar proyectos
+GET http://127.0.0.1:8000/api/proyectos
