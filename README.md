@@ -11,3 +11,7 @@ composer install
 copy .env.example .env
 php artisan key:generate
 php artisan serve
+
+php artisan vendor:publish --tag=reliese-models
+php artisan code:models
+
