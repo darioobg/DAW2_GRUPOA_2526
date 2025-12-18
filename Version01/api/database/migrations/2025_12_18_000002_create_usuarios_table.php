@@ -11,20 +11,25 @@ return new class extends Migration
      */
     public function up(): void
         {
-            Schema::create('estado_tarea', function (Blueprint $table) {
+            Schema::create('usuarios', function (Blueprint $table) {
                 $table->id();
                 $table->string('nombre');
-                $table->int('orden');
+                $table->string('apellidos');
+                $table->string('email');
+                $table->string('password_hash');
+                $table->date('fecha_registro');
+                $table->date('activo');
+                $table->boolean('activo');
                 $table->timestamps();
             });
         }
 
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations.s
      */
     public function down(): void
     {
-        Schema::dropIfExists('estado_tarea');
+        Schema::dropIfExists('usuarios');
     }
 };

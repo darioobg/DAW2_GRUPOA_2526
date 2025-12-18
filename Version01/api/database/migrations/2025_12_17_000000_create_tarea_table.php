@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
         {
             Schema::create('tarea', function (Blueprint $table) {
-                $table->id()->primary();
+                $table->id();
+                $table->Integer('id_proyectos');
+                $table->Integer('id_prioridad');
+                $table->Integer('id_asignado_a');
+                $table->Integer('id_estado');
                 $table->foreign('id_proyectos')->references('id')->on('proyectos');
                 $table->foreign('id_estado')->references('id')->on('estado_tarea');
                 $table->foreign('id_asignado_a')->references('id')->on('usuarios');
@@ -29,7 +33,7 @@ return new class extends Migration
 
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations.s
      */
     public function down(): void
     {
