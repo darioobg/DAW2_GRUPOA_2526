@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
         {
-            Schema::create('usuario_equipo', function (Blueprint $table) {
+            Schema::create('usuario_empresa', function (Blueprint $table) {
                 $table->id();
 
-                $table->primary(['id_usuario', 'id_equipo']);
+                $table->primary(['id_usuario', 'id_empresa']);
                 
                 $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
-                $table->foreign('id_equipo')->references('id')->on('equipos')->onDelete('cascade');
-                $table->foreign('id_rol_equipo')->references('id')->on('roles_equipo');
+                $table->foreign('id_empresa')->references('id')->on('empresa')->onDelete('cascade');
+                $table->foreign('id_rol_empresa')->references('id')->on('roles_empresa');
 
 
                 $table->date('fecha_alta');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuario_equipo');
+        Schema::dropIfExists('usuario_empresa');
     }
 };
