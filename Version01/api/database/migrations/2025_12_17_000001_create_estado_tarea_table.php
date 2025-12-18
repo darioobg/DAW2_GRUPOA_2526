@@ -14,7 +14,7 @@ return new class extends Migration
             Schema::create('estado_tarea', function (Blueprint $table) {
                 $table->id();
                 $table->string('nombre');
-                $table->int('orden');
+                $table->Integer('orden');
                 $table->timestamps();
             });
         }

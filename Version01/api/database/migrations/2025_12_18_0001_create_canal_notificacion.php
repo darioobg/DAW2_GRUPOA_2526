@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('canal_notificacion', function (Blueprint $table) {
-            $table->increments('id_canal_notificacion'); // PK
+            $table->id(); // PK
             $table->enum('nombre', ['EMAIL', 'INAPP'])->unique();
             $table->timestamps();
         });

@@ -13,14 +13,14 @@ return new class extends Migration
         {
             Schema::create('notificacion', function (Blueprint $table) {
                 $table->id();
-                $table->Integer('id_tarea')
-                $table->foreign('id_tarea')->references('id')->on('tarea')
-                $table->Integer('id_usuario_destino');
-                $table->foreign('id_usuario_destino')->references('id')->on('usuario');
-                $table->Integer('id_tipo_notificacion');
-                $table->foreign('id_tipo_notificacion')references('id')->on('tipo_notificacion');
-                $table->Integer('id_canal_notificacion');
-                $table->foreign('id_canal_notificacion')->references('id')->on('canal_notificacion')
+                $table->unsignedBigInteger('id_tarea');
+                $table->foreign('id_tarea')->references('id')->on('tarea');
+                $table->unsignedBigInteger('id_usuario_destino');
+                $table->foreign('id_usuario_destino')->references('id')->on('usuarios');
+                $table->unsignedBigInteger('id_tipo_notificacion');
+                $table->foreign('id_tipo_notificacion')->references('id')->on('tipo_notificacion');
+                $table->unsignedBigInteger('id_canal_notificacion');
+                $table->foreign('id_canal_notificacion')->references('id')->on('canal_notificacion');
                 $table->string('mensaje');
                 $table->boolean('leida');
                 $table->date('fecha_envio');

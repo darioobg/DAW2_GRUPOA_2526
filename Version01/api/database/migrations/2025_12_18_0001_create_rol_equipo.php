@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('rol_equipo', function (Blueprint $table) {
-            $table->increments('id_rol_equipo'); // PK
+            $table->id(); // PK
             $table->enum('nombre', ['ADMIN', 'COLABORADOR'])->unique();
             $table->timestamps();
         });

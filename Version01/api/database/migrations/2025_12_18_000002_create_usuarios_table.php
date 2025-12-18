@@ -17,7 +17,7 @@ return new class extends Migration
                 $table->string('apellidos');
                 $table->string('email');
                 $table->date('fecha_registro');
-                $table->date('activo');
+                $table->date('ultimoAcceso');
                 $table->boolean('activo');
                 $table->timestamps();
             });

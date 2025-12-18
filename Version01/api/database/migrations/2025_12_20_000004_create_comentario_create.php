@@ -13,10 +13,10 @@ return new class extends Migration
         {
             Schema::create('comentario', function (Blueprint $table) {
                 $table->id();
-                $table->Integer('id_tarea')
-                $table->foreign('id_tarea')->references('id')->on('tarea')
-                $table->Integer('id_usuario');
-                $table->foreign('id_usuario')->references('id')->on('usuario');
+                $table->unsignedBigInteger('id_tarea');
+                $table->foreign('id_tarea')->references('id')->on('tarea');
+                $table->unsignedBigInteger('id_usuario');
+                $table->foreign('id_usuario')->references('id')->on('usuarios');
                 $table->string('texto');
                 $table->date('fecha_creacion');
                 $table->date('fecha_edicion');

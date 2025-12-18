@@ -13,10 +13,10 @@ return new class extends Migration
         {
             Schema::create('tarea', function (Blueprint $table) {
                 $table->id();
-                $table->Integer('id_proyectos');
-                $table->Integer('id_prioridad');
-                $table->Integer('id_asignado_a');
-                $table->Integer('id_estado');
+                $table->unsignedBigInteger('id_proyectos');
+                $table->unsignedBigInteger('id_prioridad');
+                $table->unsignedBigInteger('id_asignado_a');
+                $table->unsignedBigInteger('id_estado');
                 $table->foreign('id_proyectos')->references('id')->on('proyectos');
                 $table->foreign('id_estado')->references('id')->on('estado_tarea');
                 $table->foreign('id_asignado_a')->references('id')->on('usuarios');
@@ -26,7 +26,7 @@ return new class extends Migration
                 $table->date('fecha_creacion');
                 $table->date('fecha_limite');
                 $table->date('fecha_cierre');
-                $table->int('orden_kanban');
+                $table->Integer('orden_kanban');
                 $table->timestamps();
             });
         }

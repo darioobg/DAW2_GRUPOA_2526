@@ -13,7 +13,7 @@ return new class extends Migration
         {
             Schema::create('prioridad', function (Blueprint $table) {
                 $table->id();
-                $table->enum('nombre',['baja','media','alta'])
+                $table->enum('nombre',['baja','media','alta']);
                 $table->timestamps();
             });
         }

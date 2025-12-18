@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('tipo_notificacion', function (Blueprint $table) {
-            $table->increments('id_tipo_notificacion'); // PK
+            $table->id(); // PK
             $table->enum('nombre', ['ASIGNACION', 'CAMBIO_ESTADO', 'COMENTARIO'])->unique();
             $table->timestamps();
         });

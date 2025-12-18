@@ -12,15 +12,13 @@ return new class extends Migration
     public function up(): void
         {
             Schema::create('usuario_equipo', function (Blueprint $table) {
-                $table->id();
-
-                $table->primary(['id_usuario', 'id_equipo']);
-                
+                $table->unsignedBigInteger('id_usuario');
+                $table->unsignedBigInteger('id_equipo');
+                $table->unsignedBigInteger('id_rol_equipo');
                 $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
-                $table->foreign('id_equipo')->references('id')->on('equipos')->onDelete('cascade');
-                $table->foreign('id_rol_equipo')->references('id')->on('roles_equipo');
-
-
+                $table->foreign('id_equipo')->references('id')->on('equipo')->onDelete('cascade');
+                $table->foreign('id_rol_equipo')->references('id')->on('rol_equipo');
+                $table->primary(['id_usuario', 'id_equipo']);
                 $table->date('fecha_alta');
                 $table->boolean('activo');
                 $table->timestamps();
