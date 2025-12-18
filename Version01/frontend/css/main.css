@@ -192,6 +192,7 @@
     padding: 30px 40px;
     width: 90%;
     margin: 0 auto;
+
 }
 
 .tableros__titulo {
@@ -205,11 +206,11 @@
 .destacados {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
+
 }
 
 .destacado {
-    width: 180px;
+    width: 95%;
     background: white;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -265,8 +266,8 @@
    Estilo Trello
 --------------------------------*/
 .mistablero--nuevo {
-    width: 150px;
-    height: 90px !important;              /* ⚡ ALTURA FIJA REAL */
+    width: 315px !important;
+    height: 150px !important;              /* ⚡ ALTURA FIJA REAL */
     background: #f0f2f5;
     border: 2px dashed #c6cdd5;
     border-radius: 10px;
@@ -279,6 +280,7 @@
     overflow: hidden !important;
     padding: 0 !important;
     transition: background 0.2s ease, border-color 0.2s ease;
+    margin-right: 25px;
 }
 
 /* Hover como Trello */
@@ -309,7 +311,7 @@
 
 
 .mistablero {
-    width: 180px;
+    width: 95%;
     background: white;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
@@ -371,9 +373,11 @@
         padding: 20px;
     }
 
+
     /* Quitamos también cualquier width fijo de sidebar aquí */
     /* .sidebar { width: 220px; }  <- NO */
 }
+
 
 
 
