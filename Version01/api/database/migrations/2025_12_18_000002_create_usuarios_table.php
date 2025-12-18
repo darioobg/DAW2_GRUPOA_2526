@@ -16,7 +16,6 @@ return new class extends Migration
                 $table->string('nombre');
                 $table->string('apellidos');
                 $table->string('email');
-                $table->string('password_hash');
                 $table->date('fecha_registro');
                 $table->date('activo');
                 $table->boolean('activo');
