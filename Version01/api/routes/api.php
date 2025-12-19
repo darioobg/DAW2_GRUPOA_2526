@@ -2,27 +2,27 @@
 use Illuminate\Support\Facades\Route;
 
 // Controllers
-use App\Http\Controllers\Api\ProyectoController;
-use App\Http\Controllers\Api\TareaController;
-use App\Http\Controllers\Api\ComentarioController;
-use App\Http\Controllers\Api\NotificacionController;
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\NotificacionController;
 
-use App\Http\Controllers\Api\UsuarioController;
-use App\Http\Controllers\Api\EmpresaController;
-use App\Http\Controllers\Api\EquipoController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EquipoController;
 
-use App\Http\Controllers\Api\PrioridadController;
-use App\Http\Controllers\Api\EstadoTareaController;
-use App\Http\Controllers\Api\EstadoProyectoController;
+use App\Http\Controllers\PrioridadController;
+use App\Http\Controllers\EstadoTareaController;
+use App\Http\Controllers\EstadoProyectoController;
 
-use App\Http\Controllers\Api\RolEmpresaController;
-use App\Http\Controllers\Api\RolEquipoController;
+use App\Http\Controllers\RolEmpresaController;
+use App\Http\Controllers\RolEquipoController;
 
-use App\Http\Controllers\Api\TipoNotificacionController;
-use App\Http\Controllers\Api\CanalNotificacionController;
+use App\Http\Controllers\TipoNotificacionController;
+use App\Http\Controllers\CanalNotificacionController;
 
-use App\Http\Controllers\Api\UsuarioEquipoController;
-use App\Http\Controllers\Api\UsuarioEmpresaController;
+use App\Http\Controllers\UsuarioEquipoController;
+use App\Http\Controllers\UsuarioEmpresaController;
 
 Route::prefix('v1')->group(function () {
 
