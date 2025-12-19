@@ -16,6 +16,7 @@ class ProyectoService
     /**
      * Devuelve todos los proyectos formateados para el frontend (ViewModel).
      */
+    
     public function listar(): array
     {
         $proyectos = $this->repo->obtenerTodos();
