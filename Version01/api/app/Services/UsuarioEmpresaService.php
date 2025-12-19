@@ -13,6 +13,9 @@ class UsuarioEmpresaService
         private UsuarioEmpresaRepository $repo
     ) {}
 
+    /**
+     * Devuelve todas las relaciones usuario-empresa formateadas.
+     */
     public function listar(): array
     {
         $items = $this->repo->obtenerTodos();
@@ -22,6 +25,9 @@ class UsuarioEmpresaService
             ->toArray();
     }
 
+    /**
+     * Devuelve una relación usuario-empresa por IDs.
+     */
     public function obtener(int $idUsuario, int $idEmpresa): array
     {
         $registro = $this->repo->obtenerPorIds($idUsuario, $idEmpresa);
@@ -33,23 +39,30 @@ class UsuarioEmpresaService
         return $this->toViewModel($registro);
     }
 
+    /**
+     * Crea una relación usuario-empresa con validaciones de negocio.
+     */
     public function crear(array $datos): array
     {
+        // id_usuario
         $idUsuario = (int)($datos['id_usuario'] ?? 0);
         if ($idUsuario <= 0) {
             throw new Exception('El id_usuario es obligatorio.');
         }
 
+        // id_empresa
         $idEmpresa = (int)($datos['id_empresa'] ?? 0);
         if ($idEmpresa <= 0) {
             throw new Exception('El id_empresa es obligatorio.');
         }
 
+        // id_rol_empresa
         $idRol = (int)($datos['id_rol_empresa'] ?? 0);
         if ($idRol <= 0) {
             throw new Exception('El id_rol_empresa es obligatorio.');
         }
 
+        // fecha_alta
         $fechaAlta = $datos['fecha_alta'] ?? now()->toDateString();
         $fechaAlta = $this->parseDateOrThrow($fechaAlta, 'fecha_alta');
 
@@ -63,6 +76,9 @@ class UsuarioEmpresaService
         return $this->toViewModel($nuevo);
     }
 
+    /**
+     * Actualiza una relación usuario-empresa existente.
+     */
     public function actualizar(int $idUsuario, int $idEmpresa, array $datos): array
     {
         $actual = $this->repo->obtenerPorIds($idUsuario, $idEmpresa);
@@ -73,6 +89,7 @@ class UsuarioEmpresaService
 
         $payload = [];
 
+        // id_rol_empresa
         if (array_key_exists('id_rol_empresa', $datos)) {
             $idRol = (int)$datos['id_rol_empresa'];
             if ($idRol <= 0) {
@@ -81,6 +98,7 @@ class UsuarioEmpresaService
             $payload['id_rol_empresa'] = $idRol;
         }
 
+        // fecha_alta
         if (array_key_exists('fecha_alta', $datos)) {
             $payload['fecha_alta'] = $this->parseDateOrThrow($datos['fecha_alta'], 'fecha_alta');
         }
@@ -94,6 +112,9 @@ class UsuarioEmpresaService
         return $this->toViewModel($editado);
     }
 
+    /**
+     * Elimina una relación usuario-empresa.
+     */
     public function eliminar(int $idUsuario, int $idEmpresa): void
     {
         $ok = $this->repo->eliminar($idUsuario, $idEmpresa);
@@ -103,6 +124,9 @@ class UsuarioEmpresaService
         }
     }
 
+    /**
+     * ViewModel para el frontend.
+     */
     private function toViewModel(UsuarioEmpresa $u): array
     {
         return [
@@ -115,6 +139,9 @@ class UsuarioEmpresaService
         ];
     }
 
+    /**
+     * Helper para validar fechas.
+     */
     private function parseDateOrThrow($value, string $campo): string
     {
         if ($value === null || $value === '') {
@@ -126,3 +153,5 @@ class UsuarioEmpresaService
         } catch (\Throwable) {
             throw new Exception("El campo {$campo} no tiene un formato de fecha válido.");
         }
+    }
+}
