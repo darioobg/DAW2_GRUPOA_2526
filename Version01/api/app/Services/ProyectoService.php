@@ -13,10 +13,7 @@ class ProyectoService
         private ProyectoRepository $repo
     ) {}
 
-    /**
-     * Devuelve todos los proyectos formateados para el frontend (ViewModel).
-     */
-    
+  
     public function listar(): array
     {
         $proyectos = $this->repo->obtenerTodos();
@@ -26,9 +23,7 @@ class ProyectoService
             ->toArray();
     }
 
-    /**
-     * Devuelve un proyecto por ID (ViewModel).
-     */
+    
     public function obtener(int $id): array
     {
         $proyecto = $this->repo->obtenerPorId($id);
@@ -40,9 +35,6 @@ class ProyectoService
         return $this->toViewModel($proyecto);
     }
 
-    /**
-     * Crea un proyecto con validaciones básicas de negocio.
-     */
     public function crear(array $datos): array
     {
         $nombre = trim($datos['nombre'] ?? '');
@@ -82,9 +74,7 @@ class ProyectoService
         return $this->toViewModel($nuevo);
     }
 
-    /**
-     * Actualiza un proyecto existente.
-     */
+
     public function actualizar(int $id, array $datos): array
     {
         $actual = $this->repo->obtenerPorId($id);
