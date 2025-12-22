@@ -68,9 +68,9 @@ class UsuarioService
             'nombre'         => $nombre,
             'apellidos'      => $apellidos,
             'email'          => $email,
-            'password_hash'  => Hash::make($password),
+            'password'  => Hash::make($password),
             'fecha_registro' => $datos['fecha_registro'] ?? now()->toDateString(),
-            'ultimo_acceso'  => $datos['ultimo_acceso'] ?? null,
+            'ultimoAcceso'  => $datos['ultimo_acceso'] ?? null,
             'activo'         => (bool)$activo,
         ]);
 
