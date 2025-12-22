@@ -9,7 +9,7 @@ class PrioridadRepository
 {
     public function obtenerTodos(): Collection
     {
-        return Prioridad::orderBy('id_prioridad')->get();
+        return Prioridad::orderBy('id')->get();
     }
 
     public function obtenerPorId(int $id): ?Prioridad

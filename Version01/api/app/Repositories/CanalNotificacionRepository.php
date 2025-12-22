@@ -9,7 +9,7 @@ class CanalNotificacionRepository
 {
     public function obtenerTodos(): Collection
     {
-        return CanalNotificacion::orderBy('id_canal_notificacion', 'asc')->get();
+        return CanalNotificacion::orderBy('id', 'asc')->get();
     }
 
     public function obtenerPorId(int $id): ?CanalNotificacion

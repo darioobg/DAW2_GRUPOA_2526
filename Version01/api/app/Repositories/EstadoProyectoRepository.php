@@ -9,7 +9,7 @@ class EstadoProyectoRepository
 {
     public function obtenerTodos(): Collection
     {
-        return EstadoProyecto::orderBy('id_estado_proyecto')->get();
+        return EstadoProyecto::orderBy('id')->get();
     }
 
     public function obtenerPorId(int $id): ?EstadoProyecto
