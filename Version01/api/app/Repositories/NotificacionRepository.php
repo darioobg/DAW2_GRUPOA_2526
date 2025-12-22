@@ -9,7 +9,7 @@ class NotificacionRepository
 {
     public function obtenerTodas(): Collection
     {
-        return Notificacion::orderBy('fecha_envío', 'desc')->get();
+        return Notificacion::orderBy('fecha_envio', 'desc')->get();
     }
 
     public function obtenerPorId(int $id): ?Notificacion

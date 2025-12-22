@@ -9,7 +9,7 @@ class TareaRepository
 {
     public function obtenerTodas(): Collection
     {
-        return Tarea::orderBy('fecha_creación', 'desc')->get();
+        return Tarea::orderBy('fecha_creacion', 'desc')->get();
     }
 
     public function obtenerPorId(int $id): ?Tarea
