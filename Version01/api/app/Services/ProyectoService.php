@@ -154,7 +154,7 @@ class ProyectoService
     private function toViewModel(Proyecto $p): array
     {
         return [
-            'id'                => $p->id_proyecto,
+            'id'                => $p->id,
             'idEquipo'          => $p->id_equipo,
             'nombre'            => $p->nombre,
             'descripcion'       => $p->descripcion,

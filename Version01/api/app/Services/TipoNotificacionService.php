@@ -122,7 +122,7 @@ class TipoNotificacionService
     private function toViewModel(TipoNotificacion $t): array
     {
         return [
-            'id'     => $t->id_tipo_notificacion,
+            'id'     => $t->id,
             'nombre' => $t->nombre,
         ];
     }

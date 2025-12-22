@@ -154,7 +154,7 @@ class UsuarioService
     private function toViewModel(Usuario $u): array
     {
         return [
-            'id'           => $u->id_usuario,
+            'id'           => $u->id,
             'nombre'       => $u->nombre,
             'apellidos'    => $u->apellidos,
             'email'        => $u->email,

@@ -103,7 +103,7 @@ class EstadoProyectoService
     private function toViewModel(EstadoProyecto $e): array
     {
         return [
-            'id'         => $e->id_estado_proyecto,
+            'id'         => $e->id,
             'nombre'     => $e->nombre,
             'creadoHace' => $e->created_at
                 ? Carbon::parse($e->created_at)->diffForHumans()

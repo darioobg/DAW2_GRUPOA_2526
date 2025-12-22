@@ -136,7 +136,7 @@ class EquipoService
     private function toViewModel(Equipo $e): array
     {
         return [
-            'id'            => $e->id_equipo,
+            'id'            => $e->id,
             'idEmpresa'     => $e->id_empresa,
             'nombre'        => $e->nombre,
             'descripcion'   => $e->descripcion,

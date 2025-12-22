@@ -126,7 +126,7 @@ class EmpresaService
     private function toViewModel(Empresa $e): array
     {
         return [
-            'id'            => $e->id_empresa,
+            'id'            => $e->id,
             'nombre'        => $e->nombre,
             'descripcion'   => $e->descripcion,
             'fechaCreacion' => $e->fecha_creacion?->toDateString(),

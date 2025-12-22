@@ -85,7 +85,7 @@ class CanalNotificacionService
     private function toViewModel(CanalNotificacion $c): array
     {
         return [
-            'id'     => $c->id_canal_notificacion,
+            'id'     => $c->id,
             'nombre' => $c->nombre,
         ];
     }

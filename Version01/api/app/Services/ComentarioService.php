@@ -169,7 +169,7 @@ class ComentarioService
     private function toViewModel(Comentario $c): array
     {
         return [
-            'id'         => $c->id_comentario,
+            'id'         => $c->id,
             'idTarea'    => $c->id_tarea,
             'idUsuario'  => $c->id_usuario,
             'texto'      => $c->texto,

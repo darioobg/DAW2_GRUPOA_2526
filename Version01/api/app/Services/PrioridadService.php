@@ -104,7 +104,7 @@ class PrioridadService
     private function toViewModel(Prioridad $p): array
     {
         return [
-            'id'         => $p->id_prioridad,
+            'id'         => $p->id,
             'nombre'     => $p->nombre,
             'creadoHace' => $p->created_at
                 ? Carbon::parse($p->created_at)->diffForHumans()

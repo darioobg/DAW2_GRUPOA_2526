@@ -35,7 +35,7 @@ class TareaService
 
     public function crear(array $datos): array
     {
-        $titulo = trim($datos['título'] ?? '');
+        $titulo = trim($datos['titulo'] ?? '');
         if ($titulo === '') {
             throw new Exception('El título de la tarea es obligatorio.');
         }
@@ -55,19 +55,19 @@ class TareaService
             throw new Exception('El id_prioridad es obligatorio.');
         }
 
-        $fechaCreacion = $datos['fecha_creación'] ?? now()->toDateString();
-        $fechaLimite   = $datos['fecha_límite'] ?? null;
+        $fechaCreacion = $datos['fecha_creacion'] ?? now()->toDateString();
+        $fechaLimite   = $datos['fecha_limite'] ?? null;
         $fechaCierre   = $datos['fecha_cierre'] ?? null;
 
         $nuevo = $this->repo->crear([
-            'id_proyecto'   => $idProyecto,
-            'id_estado'     => $idEstado,
-            'id_asignado_a' => $datos['id_asignado_a'] ?? null,
+            'id_proyectos'   => $idProyecto,
             'id_prioridad'  => $idPrioridad,
-            'título'        => $titulo,
-            'descripción'   => $datos['descripción'] ?? null,
-            'fecha_creación'=> $this->parseDateOrThrow($fechaCreacion, 'fecha_creación'),
-            'fecha_límite'  => $fechaLimite ? $this->parseDateOrThrow($fechaLimite, 'fecha_límite') : null,
+            'id_asignado_a' => $datos['id_asignado_a'] ?? null,
+            'id_estado'     => $idEstado,
+            'titulo'        => $titulo,
+            'descripcion'   => $datos['descripcion'] ?? null,
+            'fecha_creacion'=> $this->parseDateOrThrow($fechaCreacion, 'fecha_creacion'),
+            'fecha_limite'  => $fechaLimite ? $this->parseDateOrThrow($fechaLimite, 'fecha_limite') : null,
             'fecha_cierre'  => $fechaCierre ? $this->parseDateOrThrow($fechaCierre, 'fecha_cierre') : null,
             'orden_kanban'  => $datos['orden_kanban'] ?? 0,
         ]);
@@ -162,8 +162,8 @@ class TareaService
     private function toViewModel(Tarea $t): array
     {
         return [
-            'id'           => $t->id_tarea,
-            'idProyecto'   => $t->id_proyecto,
+            'id'           => $t->id,
+            'idProyecto'   => $t->id_proyectos,
             'idEstado'     => $t->id_estado,
             'idAsignadoA'  => $t->id_asignado_a,
             'idPrioridad'  => $t->id_prioridad,

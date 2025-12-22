@@ -51,9 +51,11 @@ class EstadoTareaService
                 'Estado inválido. Valores permitidos: ' . implode(', ', self::NOMBRES_VALIDOS)
             );
         }
+        $orden = trim($datos['orden'] ?? '');
 
         $nuevo = $this->repo->crear([
             'nombre' => $nombre,
+            'orden' => $orden
         ]);
 
         return $this->toViewModel($nuevo);
@@ -103,7 +105,7 @@ class EstadoTareaService
     private function toViewModel(EstadoTarea $e): array
     {
         return [
-            'id'         => $e->id_estado_tarea,
+            'id'         => $e->id,
             'nombre'     => $e->nombre,
             'creadoHace' => $e->created_at
                 ? Carbon::parse($e->created_at)->diffForHumans()

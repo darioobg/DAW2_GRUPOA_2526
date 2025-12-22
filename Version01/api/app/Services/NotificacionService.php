@@ -189,7 +189,7 @@ class NotificacionService
     private function toViewModel(Notificacion $n): array
     {
         return [
-            'id'         => $n->id_notificacion,
+            'id'         => $n->id,
             'usuarioId'  => $n->id_usuario_destino,
             'tareaId'    => $n->id_tarea,
             'tipoId'     => $n->id_tipo_notificacion,
