@@ -55,10 +55,12 @@ class EmpresaService
         }
 
         $nueva = $this->repo->crear([
-            'nombre'         => $nombre,
-            'descripcion'    => $datos['descripcion'] ?? null,
-            'fecha_creacion' => $datos['fecha_creacion'] ?? now()->toDateString(),
-            'activo'         => (bool)$activo,
+            'nombre'      => $nombre,
+            'cif_nif'     => $datos['cif_nif'],
+            'direccion'   => $datos['direccion'] ?? null,
+            'telefono'    => $datos['telefono'] ?? null,
+            'fecha_alta'  => $datos['fecha_alta'] ?? now()->toDateString(),
+            'activa'      => (bool) ($datos['activa'] ?? true),
         ]);
 
         return $this->toViewModel($nueva);
