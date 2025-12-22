@@ -1,8 +1,10 @@
 <?php
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Controllers
-use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\Api\ProyectoController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\NotificacionController;

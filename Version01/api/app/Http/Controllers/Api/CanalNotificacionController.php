@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Services\CanalNotificacionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
