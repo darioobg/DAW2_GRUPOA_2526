@@ -44,8 +44,9 @@ class EstadoProyectoService
         if ($nombre === '') {
             throw new Exception('El nombre del estado de proyecto es obligatorio.');
         }
+        $estado = strtoupper(trim($datos['estado'] ?? ''));
 
-        if (!in_array($nombre, self::NOMBRES_VALIDOS, true)) {
+        if (!in_array($estado, self::NOMBRES_VALIDOS, true)) {
             throw new Exception(
                 'Estado inválido. Valores permitidos: ' . implode(', ', self::NOMBRES_VALIDOS)
             );
