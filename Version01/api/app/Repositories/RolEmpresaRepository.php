@@ -9,7 +9,7 @@ class RolEmpresaRepository
 {
     public function obtenerTodos(): Collection
     {
-        return RolEmpresa::orderBy('id_rol_empresa')->get();
+        return RolEmpresa::orderBy('id')->get();
     }
 
     public function obtenerPorId(int $id): ?RolEmpresa

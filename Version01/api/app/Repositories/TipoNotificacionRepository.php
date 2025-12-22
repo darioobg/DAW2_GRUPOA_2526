@@ -9,7 +9,7 @@ class TipoNotificacionRepository
 {
     public function obtenerTodos(): Collection
     {
-        return TipoNotificacion::orderBy('id_tipo_notificacion', 'asc')->get();
+        return TipoNotificacion::orderBy('id', 'asc')->get();
     }
 
     public function obtenerPorId(int $id): ?TipoNotificacion

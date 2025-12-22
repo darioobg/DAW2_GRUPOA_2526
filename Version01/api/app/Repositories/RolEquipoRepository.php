@@ -9,7 +9,7 @@ class RolEquipoRepository
 {
     public function obtenerTodos(): Collection
     {
-        return RolEquipo::orderBy('id_rol_equipo')->get();
+        return RolEquipo::orderBy('id')->get();
     }
 
     public function obtenerPorId(int $id): ?RolEquipo
