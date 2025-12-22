@@ -76,7 +76,7 @@ class NotificacionService
 
         // Fecha de envío
         $fechaEnvio = $datos['fecha_envío'] ?? now()->toDateString();
-        $fechaEnvio = $this->parseDateOrThrow($fechaEnvio, 'fecha_envío');
+        $fechaEnvio = $this->parseDateOrThrow($fechaEnvio, 'fecha_envio');
 
         $nuevo = $this->repo->crear([
             'id_usuario_destino'   => $idUsuarioDestino,
@@ -84,8 +84,8 @@ class NotificacionService
             'id_tipo_notificacion' => $idTipo,
             'id_canal_notificacion'=> $idCanal,
             'mensaje'              => $mensaje,
-            'leída'                => (bool)($datos['leída'] ?? false),
-            'fecha_envío'          => $fechaEnvio,
+            'leida'                => (bool)($datos['leida'] ?? false),
+            'fecha_envio'          => $fechaEnvio,
         ]);
 
         return $this->toViewModel($nuevo);

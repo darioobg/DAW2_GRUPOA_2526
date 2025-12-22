@@ -40,6 +40,8 @@ class UsuarioEquipo extends Model
 	];
 
 	protected $fillable = [
+		'id_usuario',
+		'id_equipo',
 		'id_rol_equipo',
 		'fecha_alta',
 		'activo'

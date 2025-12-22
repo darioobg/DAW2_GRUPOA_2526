@@ -169,10 +169,10 @@ Route::prefix('v1')->group(function () {
   
     Route::get('usuarios-equipo', [UsuarioEquipoController::class, 'index']);
     Route::post('usuarios-equipo', [UsuarioEquipoController::class, 'store']);
-    Route::get('usuarios-equipo/{id}', [UsuarioEquipoController::class, 'show']);
-    Route::put('usuarios-equipo/{id}', [UsuarioEquipoController::class, 'update']);
-    Route::patch('usuarios-equipo/{id}', [UsuarioEquipoController::class, 'update']);
-    Route::delete('usuarios-equipo/{id}', [UsuarioEquipoController::class, 'destroy']);
+    Route::get('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'show']);
+    Route::put('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'update']);
+    Route::patch('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'update']);
+    Route::delete('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'destroy']);
 
    
     // USUARIO_EMPRESA (pivote)
