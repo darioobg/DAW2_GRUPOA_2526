@@ -36,7 +36,7 @@ class UsuarioEquipoController extends Controller
         }
     }
 
-    public function update(Request $request, int $idUsuario, int $idEquipo): JsonResponse
+    public function update(Request $request, int $idUsuario): JsonResponse
     {
         try {
             $registro = $this->service->actualizar($idUsuario, $idEquipo, $request->all());
