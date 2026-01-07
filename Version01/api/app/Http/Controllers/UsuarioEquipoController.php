@@ -63,18 +63,23 @@ class UsuarioEquipoController extends Controller
         }
     }
 
-  public function actual (Request $request, $idEquipo, int $idUsuario): JsonResponse
-    {
-        try {
-            $registro = $this->service->actualizar($idUsuario, $idEquipo, $request->all());
-            return response()->json($registro);
-        } catch (\Throwable $e) {
-            $msg = $e->getMessage();
-            $status = str_contains(mb_strtolower($msg), 'no encontrada.')
-                ? 404
-                : 422;
+public function actualizar(
+    Request $request,
+    $idEquipo,
+    $idUsuario
+): JsonResponse {
+    try {
+        $registro = $this->service->actualizar(
+            $idUsuario,
+            $idEquipo,
+            $request->all()
+        );
 
-            return response()->json(['message' => $msg], $status);
-        }
+        return response()->json($registro, 200);
+    } catch (\Throwable $e) {
+        $msg = 'Error al actualizar equipo';
+        return response()->json(['message' => $msg], 500);
     }
+}
+
 }
