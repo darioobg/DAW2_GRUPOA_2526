@@ -63,25 +63,6 @@ class UsuarioEquipoController extends Controller
         }
     }
 
-public function actualizar(
-    Request $request,
-    int $idEquipo,
-    int $idUsuario
-): JsonResponse {
-    try {
-        $datos = $request->validated();
-        $registro = $this->service->actualizar($idUsuario, $idEquipo, $datos);
 
-        return response()->json([
-            'ok' => true,
-            'data' => $registro
-        ]);
-    } catch (\Throwable $e) {
-        return response()->json([
-            'ok' => false,
-            'error' => $e->getMessage()
-        ], 422);
-    }
-}
 
 }
