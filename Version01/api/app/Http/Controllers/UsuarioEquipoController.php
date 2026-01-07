@@ -43,7 +43,7 @@ class UsuarioEquipoController extends Controller
             return response()->json($registro);
         } catch (\Throwable $e) {
             $msg = $e->getMessage();
-            $status = str_contains(mb_strtolower($msg), 'no encontrada')
+            $status = str_contains(mb_strtolower($msg), 'no encontrada.')
                 ? 404
                 : 422;
 
