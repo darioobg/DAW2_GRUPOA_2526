@@ -43,7 +43,22 @@ class UsuarioEquipoController extends Controller
             return response()->json($registro);
         } catch (\Throwable $e) {
             $msg = $e->getMessage();
-            $status = str_contains(mb_strtolower($msg), 'no encontrada')
+            $status = str_contains(mb_strtolower($msg), 'no encontrada.')
+                ? 404
+                : 422;
+
+            return response()->json(['message' => $msg], $status);
+        }
+    }
+
+        public function actualizar(Request $request, $idEquipo, int $idUsuario): JsonResponse
+    {
+        try {
+            $registro = $this->service->actualizar($idUsuario, $idEquipo, $request->all());
+            return response()->json($registro);
+        } catch (\Throwable $e) {
+            $msg = $e->getMessage();
+            $status = str_contains(mb_strtolower($msg), 'no encontrada.')
                 ? 404
                 : 422;
 
