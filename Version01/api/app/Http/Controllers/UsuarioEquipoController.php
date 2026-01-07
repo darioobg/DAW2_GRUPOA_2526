@@ -36,7 +36,19 @@ class UsuarioEquipoController extends Controller
         }
     }
 
-    public function update(Request $request, $idEquipo, int $idUsuario): JsonResponse
+
+
+    public function destroy(int $idUsuario, int $idEquipo): JsonResponse
+    {
+        try {
+            $this->service->eliminar($idUsuario, $idEquipo);
+            return response()->json(null, 204);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
+        public function actualizar (Request $request, $idEquipo, int $idUsuario): JsonResponse
     {
         try {
             $registro = $this->service->actualizar($idUsuario, $idEquipo, $request->all());
@@ -63,16 +75,6 @@ class UsuarioEquipoController extends Controller
                 : 422;
 
             return response()->json(['message' => $msg], $status);
-        }
-    }
-
-    public function destroy(int $idUsuario, int $idEquipo): JsonResponse
-    {
-        try {
-            $this->service->eliminar($idUsuario, $idEquipo);
-            return response()->json(null, 204);
-        } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
         }
     }
 }
