@@ -64,5 +64,4 @@ class UsuarioEquipoController extends Controller
     }
 
 
-
 }
