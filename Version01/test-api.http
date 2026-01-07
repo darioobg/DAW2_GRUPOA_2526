@@ -10,3 +10,6 @@ Content-Type: application/json
 
 ### Listar proyectos
 GET http://127.0.0.1:8000/api/proyectos
+
+### Eliminar proyectos
+DELETE http://127.0.0.1:8000/api/proyectos/1
