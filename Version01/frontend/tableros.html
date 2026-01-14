@@ -115,61 +115,90 @@
         <!-- SECCIÓN TABLEROS -->
         <div class="tableros flex-grow-1">
           <!-- DESTACADOS -->
-          <section class="tableros__destacados mb-4">
-            <h2 class="tableros__titulo">Tableros Destacados</h2>
+         <!-- DESTACADOS (Rama conflicto-A) -->
+<section class="tableros__destacados mb-4">
+  <!-- 1) Cambio de título -->
+  <h1 class="tableros__titulo">Destacados (equipo)</h1>
 
-            <!-- Ahora usamos grid de Bootstrap en lugar de flex manual -->
-            <div class="row g-3 destacados" id="tablerosDestacados">
-              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="destacado h-100">
-                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 1">
-                  <div class="destacado__nombre">
-                    <h2>Desarrollo</h2>
-                  </div>
-                  <div class="destacado__equipo">
-                    <p>Grupo 2</p>
-                  </div>
-                </div>
-              </article>
+  <!-- 2) Cambio de id + 3) Modificación del grid Bootstrap (g-3 -> g-4) -->
+  <div class="row g-4 destacados" id="destacadosList">
 
-              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="destacado h-100">
-                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 2">
-                  <div class="destacado__nombre">
-                    <h2>Diseño UX</h2>
-                  </div>
-                  <div class="destacado__equipo">
-                    <p>Equipo Creativo</p>
-                  </div>
-                </div>
-              </article>
+    <!-- 4) Reordenación: ahora va primero Diseño UX -->
+    <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <!-- 5) Refactor interno: se añade header/body y cambia el orden -->
+      <div class="destacado h-100 destacado--v2">
+        <div class="destacado__header">
+          <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado: Diseño UX">
+        </div>
 
-              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="destacado h-100">
-                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 3">
-                  <div class="destacado__nombre">
-                    <h2>Marketing Q3</h2>
-                  </div>
-                  <div class="destacado__equipo">
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </article>
+        <div class="destacado__body">
+          <div class="destacado__nombre">
+            <h3>Diseño UX</h3>
+          </div>
+          <div class="destacado__equipo">
+            <p>Equipo Creativo</p>
+          </div>
+        </div>
+      </div>
+    </article>
 
-              <article class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="destacado h-100">
-                  <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado 3">
-                  <div class="destacado__nombre">
-                    <h2>Marketing Q3</h2>
-                  </div>
-                  <div class="destacado__equipo">
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </section>
-          
+    <!-- Reordenación: Desarrollo va segundo -->
+    <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="destacado h-100 destacado--v2">
+        <div class="destacado__header">
+          <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado: Desarrollo">
+        </div>
+
+        <div class="destacado__body">
+          <div class="destacado__nombre">
+            <h3>Desarrollo</h3>
+          </div>
+          <div class="destacado__equipo">
+            <p>Grupo 2</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Marketing Q3 tercero -->
+    <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="destacado h-100 destacado--v2">
+        <div class="destacado__header">
+          <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado: Marketing Q3">
+        </div>
+
+        <div class="destacado__body">
+          <div class="destacado__nombre">
+            <h3>Marketing Q3</h3>
+          </div>
+          <div class="destacado__equipo">
+            <p>Marketing</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Extra (opcional): añades uno nuevo para que el bloque cambie aún más -->
+    <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="destacado h-100 destacado--v2">
+        <div class="destacado__header">
+          <img src="./img/africa.jpg" class="destacado__imagen" alt="Proyecto destacado: DevOps">
+        </div>
+
+        <div class="destacado__body">
+          <div class="destacado__nombre">
+            <h3>DevOps</h3>
+          </div>
+          <div class="destacado__equipo">
+            <p>Infra</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
           <!-- MIS TABLEROS -->
           <section class="tableros__mis">
             <h2 class="tableros__titulo">Tus Espacios de Trabajo</h2>
