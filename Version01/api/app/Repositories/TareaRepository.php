@@ -23,13 +23,11 @@ class TareaRepository
     }
 
     public function actualizar(int $id, array $datos): ?Tarea
-    {
-        $tarea = Tarea::find($id);
-        if (!$tarea) return null;
-
-        $tarea->update($datos);
-        return $tarea->fresh();
-    }
+{
+    // Versión minimalista de la rama conflicto
+    Tarea::where('id', $id)->update($datos);
+    return Tarea::find($id);
+}
 
     public function eliminar(int $id): bool
     {
