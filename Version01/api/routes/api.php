@@ -2,44 +2,40 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 // Controllers
-use App\Http\Controllers\ProyectoController;
-use App\Http\Controllers\TareaController;
+use App\Http\Controllers\CanalNotificacionController;
 use App\Http\Controllers\ComentarioController;
-use App\Http\Controllers\NotificacionController;
-
-use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EquipoController;
-
-use App\Http\Controllers\PrioridadController;
-use App\Http\Controllers\EstadoTareaController;
 use App\Http\Controllers\EstadoProyectoController;
-
+use App\Http\Controllers\EstadoTareaController;
+use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\PrioridadController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\RolEmpresaController;
 use App\Http\Controllers\RolEquipoController;
-
+use App\Http\Controllers\TareaController;
 use App\Http\Controllers\TipoNotificacionController;
-use App\Http\Controllers\CanalNotificacionController;
-
-use App\Http\Controllers\UsuarioEquipoController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UsuarioEmpresaController;
+use App\Http\Controllers\UsuarioEquipoController;
 
 Route::prefix('v1')->group(function () {
-
     // PROYECTO
- 
+
+    // Ruta de búsqueda añadida
     Route::get('proyectos', [ProyectoController::class, 'index']);
     Route::post('proyectos', [ProyectoController::class, 'store']);
     Route::get('proyectos/{id}', [ProyectoController::class, 'show']);
     Route::put('proyectos/{id}', [ProyectoController::class, 'update']);
     Route::patch('proyectos/{id}', [ProyectoController::class, 'update']);
     Route::delete('proyectos/{id}', [ProyectoController::class, 'destroy']);
+    Route::get('test', function () {
+        throw new \Exception('TEST API');
+    });
 
-  
     // TAREA
-   
+
     Route::get('tareas', [TareaController::class, 'index']);
     Route::post('tareas', [TareaController::class, 'store']);
     Route::get('tareas/{id}', [TareaController::class, 'show']);
@@ -57,7 +53,7 @@ Route::prefix('v1')->group(function () {
     Route::delete('comentarios/{id}', [ComentarioController::class, 'destroy']);
 
     // NOTIFICACION
-    
+
     Route::get('notificaciones', [NotificacionController::class, 'index']);
     Route::post('notificaciones', [NotificacionController::class, 'store']);
     Route::get('notificaciones/{id}', [NotificacionController::class, 'show']);
@@ -65,16 +61,14 @@ Route::prefix('v1')->group(function () {
     Route::patch('notificaciones/{id}', [NotificacionController::class, 'update']);
     Route::delete('notificaciones/{id}', [NotificacionController::class, 'destroy']);
 
-
     // USUARIO
- 
+
     Route::get('usuarios', [UsuarioController::class, 'index']);
     Route::post('usuarios', [UsuarioController::class, 'store']);
     Route::get('usuarios/{id}', [UsuarioController::class, 'show']);
     Route::put('usuarios/{id}', [UsuarioController::class, 'update']);
     Route::patch('usuarios/{id}', [UsuarioController::class, 'update']);
     Route::delete('usuarios/{id}', [UsuarioController::class, 'destroy']);
-
 
     // EMPRESA
 
@@ -85,9 +79,8 @@ Route::prefix('v1')->group(function () {
     Route::patch('empresas/{id}', [EmpresaController::class, 'update']);
     Route::delete('empresas/{id}', [EmpresaController::class, 'destroy']);
 
-    
     // EQUIPO
-   
+
     Route::get('equipos', [EquipoController::class, 'index']);
     Route::post('equipos', [EquipoController::class, 'store']);
     Route::get('equipos/{id}', [EquipoController::class, 'show']);
@@ -95,9 +88,8 @@ Route::prefix('v1')->group(function () {
     Route::patch('equipos/{id}', [EquipoController::class, 'update']);
     Route::delete('equipos/{id}', [EquipoController::class, 'destroy']);
 
- 
     // PRIORIDAD
-   
+
     Route::get('prioridades', [PrioridadController::class, 'index']);
     Route::post('prioridades', [PrioridadController::class, 'store']);
     Route::get('prioridades/{id}', [PrioridadController::class, 'show']);
@@ -105,9 +97,8 @@ Route::prefix('v1')->group(function () {
     Route::patch('prioridades/{id}', [PrioridadController::class, 'update']);
     Route::delete('prioridades/{id}', [PrioridadController::class, 'destroy']);
 
-   
     // ESTADO_TAREA
-  
+
     Route::get('estado-tarea', [EstadoTareaController::class, 'index']);
     Route::post('estado-tarea', [EstadoTareaController::class, 'store']);
     Route::get('estado-tarea/{id}', [EstadoTareaController::class, 'show']);
@@ -116,7 +107,7 @@ Route::prefix('v1')->group(function () {
     Route::delete('estado-tarea/{id}', [EstadoTareaController::class, 'destroy']);
 
     // ESTADO_PROYECTO
-    
+
     Route::get('estado-proyecto', [EstadoProyectoController::class, 'index']);
     Route::post('estado-proyecto', [EstadoProyectoController::class, 'store']);
     Route::get('estado-proyecto/{id}', [EstadoProyectoController::class, 'show']);
@@ -124,9 +115,8 @@ Route::prefix('v1')->group(function () {
     Route::patch('estado-proyecto/{id}', [EstadoProyectoController::class, 'update']);
     Route::delete('estado-proyecto/{id}', [EstadoProyectoController::class, 'destroy']);
 
- 
     // ROL_EMPRESA
-  
+
     Route::get('roles-empresa', [RolEmpresaController::class, 'index']);
     Route::post('roles-empresa', [RolEmpresaController::class, 'store']);
     Route::get('roles-empresa/{id}', [RolEmpresaController::class, 'show']);
@@ -134,9 +124,8 @@ Route::prefix('v1')->group(function () {
     Route::patch('roles-empresa/{id}', [RolEmpresaController::class, 'update']);
     Route::delete('roles-empresa/{id}', [RolEmpresaController::class, 'destroy']);
 
- 
     // ROL_EQUIPO
-  
+
     Route::get('roles-equipo', [RolEquipoController::class, 'index']);
     Route::post('roles-equipo', [RolEquipoController::class, 'store']);
     Route::get('roles-equipo/{id}', [RolEquipoController::class, 'show']);
@@ -144,16 +133,14 @@ Route::prefix('v1')->group(function () {
     Route::patch('roles-equipo/{id}', [RolEquipoController::class, 'update']);
     Route::delete('roles-equipo/{id}', [RolEquipoController::class, 'destroy']);
 
-
     // TIPO_NOTIFICACION
- 
+
     Route::get('tipos-notificacion', [TipoNotificacionController::class, 'index']);
     Route::post('tipos-notificacion', [TipoNotificacionController::class, 'store']);
     Route::get('tipos-notificacion/{id}', [TipoNotificacionController::class, 'show']);
     Route::put('tipos-notificacion/{id}', [TipoNotificacionController::class, 'update']);
     Route::patch('tipos-notificacion/{id}', [TipoNotificacionController::class, 'update']);
     Route::delete('tipos-notificacion/{id}', [TipoNotificacionController::class, 'destroy']);
-
 
     // CANAL_NOTIFICACION
 
@@ -164,9 +151,8 @@ Route::prefix('v1')->group(function () {
     Route::patch('canales-notificacion/{id}', [CanalNotificacionController::class, 'update']);
     Route::delete('canales-notificacion/{id}', [CanalNotificacionController::class, 'destroy']);
 
-    
     // USUARIO_EQUIPO (pivote)
-  
+
     Route::get('usuarios-equipo', [UsuarioEquipoController::class, 'index']);
     Route::post('usuarios-equipo', [UsuarioEquipoController::class, 'store']);
     Route::get('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'show']);
@@ -174,7 +160,6 @@ Route::prefix('v1')->group(function () {
     Route::patch('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'update']);
     Route::delete('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'destroy']);
 
-   
     // USUARIO_EMPRESA (pivote)
 
     Route::get('usuarios-empresa', [UsuarioEmpresaController::class, 'index']);

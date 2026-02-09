@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Notificacion
- * 
+ *
  * @property int $id
  * @property int $id_tarea
  * @property int $id_usuario_destino
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $fecha_envio
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property CanalNotificacion $canal_notificacion
  * @property Tarea $tarea
  * @property TipoNotificacion $tipo_notificacion
@@ -70,6 +70,6 @@ class Notificacion extends Model
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class, 'id_usuario_destino');
+		return $this->belongsTo(User::class, 'id_usuario_destino');
 	}
 }

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Comentario
- * 
+ *
  * @property int $id
  * @property int $id_tarea
  * @property int $id_usuario
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $fecha_edicion
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Tarea $tarea
  * @property User $usuario
  *
@@ -52,6 +52,6 @@ class Comentario extends Model
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class, 'id_usuario');
+		return $this->belongsTo(User::class, 'id_usuario');
 	}
 }

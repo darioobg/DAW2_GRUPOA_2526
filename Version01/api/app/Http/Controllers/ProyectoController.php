@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProyectoFiltroRequest;
+use App\Http\Requests\ProyectoRequest;
 use App\Services\ProyectoService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
@@ -13,52 +14,44 @@ class ProyectoController extends Controller
         private ProyectoService $service
     ) {}
 
-    public function index(): JsonResponse
+    public function index(ProyectoFiltroRequest $request): JsonResponse
     {
-        return response()->json($this->service->listar());
+        $filters = $request->validated();
+        $proyectos = $this->service->listar($filters);
+        return response()->json($proyectos, 200);
+    }
+
+    public function buscar(ProyectoFiltroRequest $request): JsonResponse
+    {
+        return response()->json(
+            $this->service->buscar(
+                $request->validated()
+            ),
+            200
+        );
     }
 
     public function show(int $id): JsonResponse
     {
-        try {
-            return response()->json($this->service->obtener($id));
-        } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        }
+        $proyecto = $this->service->obtener($id);
+        return response()->json($proyecto, 200);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(ProyectoRequest $request): JsonResponse
     {
-        
-        try {
-            $proyecto = $this->service->crear($request->all());
-            return response()->json($proyecto, 201);
-        } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
+        $proyecto = $this->service->crear($request->validated());
+        return response()->json($proyecto, 201);
     }
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(ProyectoRequest $request, int $id): JsonResponse
     {
-        try {
-            $proyecto = $this->service->actualizar($id, $request->all());
-            return response()->json($proyecto);
-        } catch (\Throwable $e) {
-            // Si el service lanza "no encontrado", devolvemos 404, si no 422
-            $msg = $e->getMessage();
-            $status = str_contains(mb_strtolower($msg), 'no encontrado') ? 404 : 422;
-
-            return response()->json(['message' => $msg], $status);
-        }
+        $proyecto = $this->service->actualizar($id, $request->validated());
+        return response()->json($proyecto, 200);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        try {
-            $this->service->eliminar($id);
-            return response()->json(null, 204);
-        } catch (\Throwable $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        }
+        $this->service->eliminar($id);
+        return response()->json(['message' => 'Proyecto eliminado correctamente.'], 200);
     }
 }

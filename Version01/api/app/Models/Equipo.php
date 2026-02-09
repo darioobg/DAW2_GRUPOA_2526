@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Equipo
- * 
+ *
  * @property int $id
  * @property int $id_empresa
  * @property string $nombre
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $fecha_creacion
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Empresa $empresa
  * @property Collection|Proyecto[] $proyectos
  * @property Collection|Usuario[] $usuarios
@@ -55,7 +55,7 @@ class Equipo extends Model
 
 	public function usuarios()
 	{
-		return $this->belongsToMany(Usuario::class, 'usuario_equipo', 'id_equipo', 'id_usuario')
+		return $this->belongsToMany(User::class, 'usuario_equipo', 'id_equipo', 'id_usuario')
 					->withPivot('id_rol_equipo', 'fecha_alta', 'activo')
 					->withTimestamps();
 	}

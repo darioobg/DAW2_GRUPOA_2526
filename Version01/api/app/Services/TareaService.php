@@ -16,9 +16,12 @@ class TareaService
     public function listar(): array
     {
         $items = $this->repo->obtenerTodas();
+        // dd($items->first());
+        // dd($items->first()->toArray());
+        // dd($this->toViewModel($items->first()));
 
         return $items
-            ->map(fn (Tarea $t) => $this->toViewModel($t))
+            ->map(fn(Tarea $t) => $this->toViewModel($t))
             ->toArray();
     }
 
@@ -40,36 +43,36 @@ class TareaService
             throw new Exception('El título de la tarea es obligatorio.');
         }
 
-        $idProyecto = (int)($datos['id_proyecto'] ?? 0);
+        $idProyecto = (int) ($datos['id_proyecto'] ?? 0);
         if ($idProyecto <= 0) {
             throw new Exception('El id_proyecto es obligatorio.');
         }
 
-        $idEstado = (int)($datos['id_estado'] ?? 0);
+        $idEstado = (int) ($datos['id_estado'] ?? 0);
         if ($idEstado <= 0) {
             throw new Exception('El id_estado es obligatorio.');
         }
 
-        $idPrioridad = (int)($datos['id_prioridad'] ?? 0);
+        $idPrioridad = (int) ($datos['id_prioridad'] ?? 0);
         if ($idPrioridad <= 0) {
             throw new Exception('El id_prioridad es obligatorio.');
         }
 
         $fechaCreacion = $datos['fecha_creacion'] ?? now()->toDateString();
-        $fechaLimite   = $datos['fecha_limite'] ?? null;
-        $fechaCierre   = $datos['fecha_cierre'] ?? null;
+        $fechaLimite = $datos['fecha_limite'] ?? null;
+        $fechaCierre = $datos['fecha_cierre'] ?? null;
 
         $nuevo = $this->repo->crear([
-            'id_proyectos'   => $idProyecto,
-            'id_prioridad'  => $idPrioridad,
+            'id_proyectos' => $idProyecto,
+            'id_prioridad' => $idPrioridad,
             'id_asignado_a' => $datos['id_asignado_a'] ?? null,
-            'id_estado'     => $idEstado,
-            'titulo'        => $titulo,
-            'descripcion'   => $datos['descripcion'] ?? null,
-            'fecha_creacion'=> $this->parseDateOrThrow($fechaCreacion, 'fecha_creacion'),
-            'fecha_limite'  => $fechaLimite ? $this->parseDateOrThrow($fechaLimite, 'fecha_limite') : null,
-            'fecha_cierre'  => $fechaCierre ? $this->parseDateOrThrow($fechaCierre, 'fecha_cierre') : null,
-            'orden_kanban'  => $datos['orden_kanban'] ?? 0,
+            'id_estado' => $idEstado,
+            'titulo' => $titulo,
+            'descripcion' => $datos['descripcion'] ?? null,
+            'fecha_creacion' => $this->parseDateOrThrow($fechaCreacion, 'fecha_creacion'),
+            'fecha_limite' => $fechaLimite ? $this->parseDateOrThrow($fechaLimite, 'fecha_limite') : null,
+            'fecha_cierre' => $fechaCierre ? $this->parseDateOrThrow($fechaCierre, 'fecha_cierre') : null,
+            'orden_kanban' => $datos['orden_kanban'] ?? 0,
         ]);
 
         return $this->toViewModel($nuevo);
@@ -86,7 +89,7 @@ class TareaService
         $payload = [];
 
         if (array_key_exists('título', $datos)) {
-            $titulo = trim((string)$datos['título']);
+            $titulo = trim((string) $datos['título']);
             if ($titulo === '') {
                 throw new Exception('El título no puede estar vacío.');
             }
@@ -94,26 +97,29 @@ class TareaService
         }
 
         if (array_key_exists('id_proyecto', $datos)) {
-            $idProyecto = (int)$datos['id_proyecto'];
-            if ($idProyecto <= 0) throw new Exception('id_proyecto inválido.');
+            $idProyecto = (int) $datos['id_proyecto'];
+            if ($idProyecto <= 0)
+                throw new Exception('id_proyecto inválido.');
             $payload['id_proyecto'] = $idProyecto;
         }
 
         if (array_key_exists('id_estado', $datos)) {
-            $idEstado = (int)$datos['id_estado'];
-            if ($idEstado <= 0) throw new Exception('id_estado inválido.');
+            $idEstado = (int) $datos['id_estado'];
+            if ($idEstado <= 0)
+                throw new Exception('id_estado inválido.');
             $payload['id_estado'] = $idEstado;
         }
 
         if (array_key_exists('id_prioridad', $datos)) {
-            $idPrioridad = (int)$datos['id_prioridad'];
-            if ($idPrioridad <= 0) throw new Exception('id_prioridad inválido.');
+            $idPrioridad = (int) $datos['id_prioridad'];
+            if ($idPrioridad <= 0)
+                throw new Exception('id_prioridad inválido.');
             $payload['id_prioridad'] = $idPrioridad;
         }
 
         if (array_key_exists('id_asignado_a', $datos)) {
             $payload['id_asignado_a'] = $datos['id_asignado_a'] !== null
-                ? (int)$datos['id_asignado_a']
+                ? (int) $datos['id_asignado_a']
                 : null;
         }
 
@@ -138,7 +144,7 @@ class TareaService
         }
 
         if (array_key_exists('orden_kanban', $datos)) {
-            $payload['orden_kanban'] = (int)$datos['orden_kanban'];
+            $payload['orden_kanban'] = (int) $datos['orden_kanban'];
         }
 
         $editado = $this->repo->actualizar($id, $payload);
@@ -162,18 +168,18 @@ class TareaService
     private function toViewModel(Tarea $t): array
     {
         return [
-            'id'           => $t->id,
-            'idProyecto'   => $t->id_proyectos,
-            'idEstado'     => $t->id_estado,
-            'idAsignadoA'  => $t->id_asignado_a,
-            'idPrioridad'  => $t->id_prioridad,
-            'titulo'       => $t->título,
-            'descripcion'  => $t->descripción,
-            'fechaCreacion'=> $t->fecha_creación?->toDateString(),
-            'fechaLimite'  => $t->fecha_límite?->toDateString(),
-            'fechaCierre'  => $t->fecha_cierre?->toDateString(),
-            'ordenKanban'  => $t->orden_kanban,
-            'creadoHace'   => $t->fecha_creación
+            'id' => $t->id,
+            'idProyecto' => $t->id_proyectos,
+            'idEstado' => $t->id_estado,
+            'idAsignadoA' => $t->id_asignado_a,
+            'idPrioridad' => $t->id_prioridad,
+            'titulo' => $t->titulo,
+            'descripcion' => $t->descripcion,
+            'fechaCreacion' => $t->fecha_creacion?->toDateString(),
+            'fechaLimite' => $t->fecha_limite?->toDateString(),
+            'fechaCierre' => $t->fecha_cierre?->toDateString(),
+            'ordenKanban' => $t->orden_kanban,
+            'creadoHace' => $t->fecha_creacion
                 ? Carbon::parse($t->fecha_creación)->diffForHumans()
                 : null,
         ];

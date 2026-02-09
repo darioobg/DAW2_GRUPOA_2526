@@ -13,17 +13,36 @@ class ProyectoService
         private ProyectoRepository $repo
     ) {}
 
-  
-    public function listar(): array
+    /**
+     * Lista los proyectos filtrados por los parámetros dados.
+     *
+     * @param array $filters
+     * @return array
+     */
+    public function listar(array $filters = []): array
     {
-        $proyectos = $this->repo->obtenerTodos();
+        $proyectos = $this->repo->obtenerTodos($filters);
 
         return $proyectos
-            ->map(fn (Proyecto $p) => $this->toViewModel($p))
+            ->map(fn(Proyecto $p) => $this->toViewModel($p))
             ->toArray();
     }
 
-    
+    /**
+     * Busca proyectos por un término de búsqueda.
+     *
+     * @param string|null $query
+     * @return array
+     */
+    public function buscar(array $filtros): array
+    {
+        $proyectos = $this->repo->buscar($filtros);
+
+        return $proyectos
+            ->map(fn(Proyecto $p) => $this->toViewModel($p))
+            ->toArray();
+    }
+
     public function obtener(int $id): array
     {
         $proyecto = $this->repo->obtenerPorId($id);
@@ -42,12 +61,12 @@ class ProyectoService
             throw new Exception('El nombre del proyecto es obligatorio.');
         }
 
-        $idEquipo = (int)($datos['id_equipo'] ?? 0);
+        $idEquipo = (int) ($datos['id_equipo'] ?? 0);
         if ($idEquipo <= 0) {
             throw new Exception('El id_equipo es obligatorio.');
         }
 
-        $idEstado = (int)($datos['id_estado_proyecto'] ?? 0);
+        $idEstado = (int) ($datos['id_estado_proyecto'] ?? 0);
         if ($idEstado <= 0) {
             throw new Exception('El id_estado_proyecto es obligatorio.');
         }
@@ -62,18 +81,17 @@ class ProyectoService
         $fechaCreacion = $datos['fecha_creacion'] ?? now()->toDateString();
 
         $nuevo = $this->repo->crear([
-            'id_equipo'          => $idEquipo,
-            'nombre'             => $nombre,
-            'descripcion'        => $datos['descripcion'] ?? null,
-            'fecha_creacion'     => $fechaCreacion,
-            'fecha_inicio'       => $fechaInicio,
+            'id_equipo' => $idEquipo,
+            'nombre' => $nombre,
+            'descripcion' => $datos['descripcion'] ?? null,
+            'fecha_creacion' => $fechaCreacion,
+            'fecha_inicio' => $fechaInicio,
             'fecha_fin_prevista' => $fechaFinPrevista,
             'id_estado_proyecto' => $idEstado,
         ]);
 
         return $this->toViewModel($nuevo);
     }
-
 
     public function actualizar(int $id, array $datos): array
     {
@@ -85,19 +103,21 @@ class ProyectoService
         $payload = [];
 
         if (array_key_exists('id_equipo', $datos)) {
-            $idEquipo = (int)$datos['id_equipo'];
-            if ($idEquipo <= 0) throw new Exception('id_equipo inválido.');
+            $idEquipo = (int) $datos['id_equipo'];
+            if ($idEquipo <= 0)
+                throw new Exception('id_equipo inválido.');
             $payload['id_equipo'] = $idEquipo;
         }
 
         if (array_key_exists('nombre', $datos)) {
-            $nombre = trim((string)$datos['nombre']);
-            if ($nombre === '') throw new Exception('El nombre del proyecto no puede estar vacío.');
+            $nombre = trim((string) $datos['nombre']);
+            if ($nombre === '')
+                throw new Exception('El nombre del proyecto no puede estar vacío.');
             $payload['nombre'] = $nombre;
         }
 
         if (array_key_exists('descripcion', $datos)) {
-            $payload['descripcion'] = $datos['descripcion']; // puede ser null
+            $payload['descripcion'] = $datos['descripcion'];  // puede ser null
         }
 
         if (array_key_exists('fecha_creacion', $datos)) {
@@ -113,14 +133,15 @@ class ProyectoService
         }
 
         if (array_key_exists('id_estado_proyecto', $datos)) {
-            $idEstado = (int)$datos['id_estado_proyecto'];
-            if ($idEstado <= 0) throw new Exception('id_estado_proyecto inválido.');
+            $idEstado = (int) $datos['id_estado_proyecto'];
+            if ($idEstado <= 0)
+                throw new Exception('id_estado_proyecto inválido.');
             $payload['id_estado_proyecto'] = $idEstado;
         }
 
         // Validación cruzada de fechas (usando valores finales)
         $fechaInicioFinal = $payload['fecha_inicio'] ?? $actual->fecha_inicio;
-        $fechaFinFinal    = $payload['fecha_fin_prevista'] ?? $actual->fecha_fin_prevista;
+        $fechaFinFinal = $payload['fecha_fin_prevista'] ?? $actual->fecha_fin_prevista;
 
         if ($fechaInicioFinal && $fechaFinFinal) {
             if (Carbon::parse($fechaFinFinal)->lt(Carbon::parse($fechaInicioFinal))) {
@@ -154,15 +175,15 @@ class ProyectoService
     private function toViewModel(Proyecto $p): array
     {
         return [
-            'id'                => $p->id,
-            'idEquipo'          => $p->id_equipo,
-            'nombre'            => $p->nombre,
-            'descripcion'       => $p->descripcion,
-            'fechaCreacion'     => $p->fecha_creacion?->toDateString(),
-            'fechaInicio'       => $p->fecha_inicio?->toDateString(),
-            'fechaFinPrevista'  => $p->fecha_fin_prevista?->toDateString(),
-            'idEstadoProyecto'  => $p->id_estado_proyecto,
-            'creadoHace'        => $p->created_at
+            'id' => $p->id,
+            'idEquipo' => $p->id_equipo,
+            'nombre' => $p->nombre,
+            'descripcion' => $p->descripcion,
+            'fechaCreacion' => $p->fecha_creacion?->toDateString(),
+            'fechaInicio' => $p->fecha_inicio?->toDateString(),
+            'fechaFinPrevista' => $p->fecha_fin_prevista?->toDateString(),
+            'idEstadoProyecto' => $p->id_estado_proyecto,
+            'creadoHace' => $p->created_at
                 ? Carbon::parse($p->created_at)->diffForHumans()
                 : null,
         ];

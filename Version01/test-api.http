@@ -1,23 +1,76 @@
-### Crear proyecto de prueba
-POST http://127.0.0.1:8000/api/proyectos
+### 🟩 GET all proyectos
+GET http://127.0.0.1:8000/api/v1/proyectos
+Accept: application/json
+
+###
+
+### 🟦 GET proyecto by id
+# Replace {id} with a real proyecto id, e.g. 1
+GET http://127.0.0.1:8000/api/v1/proyectos/3
+Accept: application/json
+
+###
+
+### 🟨 GET buscar proyectos (por término)
+# Reemplaza "prueba" por un término de búsqueda relevante
+GET http://127.0.0.1:8000/api/v1/proyectos/buscar?q=reservas
+Accept: application/json
+
+###
+
+### 🟢 POST create proyecto (valid data)
+POST http://127.0.0.1:8000/api/v1/proyectos
 Content-Type: application/json
+Accept: application/json
 
 {
-<<<<<<< Updated upstream
-  "nombre": "Proyecto DAW",
-  "descripcion": "Tablero principal del módulo",
-  "color_fondo": "#0c6bf2"
-=======
   "nombre": "Nuevo Proyecto API",
   "descripcion": "Proyecto creado desde REST Client",
   "id_equipo": 2,
+  "fecha_creacion": "2024-06-15",
+  "fecha_inicio": "2024-06-20",
   "fecha_fin_prevista": "2024-07-05",
   "id_estado_proyecto": 1
->>>>>>> Stashed changes
 }
 
-### Listar proyectos
-GET http://127.0.0.1:8000/api/proyectos
+###
 
-### Eliminar proyectos
-DELETE http://127.0.0.1:8000/api/proyectos/1
+### 🛑 POST create proyecto (validation error: nombre vacío)
+POST http://127.0.0.1:8000/api/v1/proyectos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Jino Olivera",
+  "descripcion": "Prueba de error de validación",
+  "id_equipo": 2,
+  "fecha_creacion": "2024-06-15",
+  "fecha_inicio": "2024-06-20",
+  "fecha_fin_prevista": "2024-07-05",
+  "id_estado_proyecto": 1
+}
+
+###
+
+### 🟠 PUT update proyecto
+# Replace {id} with an existing proyecto id to update
+PUT http://127.0.0.1:8000/api/v1/proyectos/3
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Proyecto API Actualizado",
+  "descripcion": "Descripción actualizada",
+  "id_equipo": 2,
+  "fecha_creacion": "2024-06-15",
+  "fecha_inicio": "2024-06-22",
+  "fecha_fin_prevista": "2024-08-01",
+  "id_estado_proyecto": 2
+}
+
+###
+
+### 🟥 DELETE proyecto
+# Replace {id} with a real proyecto id to delete
+DELETE http://127.0.0.1:8000/api/v1/proyectos/2
+Accept: application/json
