@@ -6,8 +6,14 @@
 
 namespace App\Models;
 
+use App\Http\Middleware\Authenticate;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User
@@ -23,8 +29,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
 	protected $table = 'users';
 
 

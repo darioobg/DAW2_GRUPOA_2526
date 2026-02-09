@@ -2,63 +2,90 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// Controllers
-use App\Http\Controllers\CanalNotificacionController;
+
+// --- 1. Controladores de Autenticación (Carpeta Api) ---
+use App\Http\Controllers\Api\AuthController;
+
+// --- 2. Controladores de Entidades (Carpeta base Controllers) ---
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\TareaController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EquipoController;
-use App\Http\Controllers\EstadoProyectoController;
-use App\Http\Controllers\EstadoTareaController;
-use App\Http\Controllers\NotificacionController;
+
+// --- 3. Controladores de Catálogos ---
 use App\Http\Controllers\PrioridadController;
-use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\EstadoTareaController;
+use App\Http\Controllers\EstadoProyectoController;
 use App\Http\Controllers\RolEmpresaController;
 use App\Http\Controllers\RolEquipoController;
-use App\Http\Controllers\TareaController;
 use App\Http\Controllers\TipoNotificacionController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\UsuarioEmpresaController;
+use App\Http\Controllers\CanalNotificacionController;
+
+// --- 4. Controladores de Pivotes ---
 use App\Http\Controllers\UsuarioEquipoController;
+use App\Http\Controllers\UsuarioEmpresaController;
 
 Route::prefix('v1')->group(function () {
 
-    // --- ENTIDADES PRINCIPALES (CRUD ESTÁNDAR) ---
-    // apiResource genera automáticamente: index (GET), store (POST), show (GET), update (PUT/PATCH), destroy (DELETE)
+    // ==========================================
+    //            RUTAS PÚBLICAS
+    // ==========================================
 
-    Route::apiResource('proyectos', ProyectoController::class);
-    Route::apiResource('tareas', TareaController::class);
-    Route::apiResource('comentarios', ComentarioController::class);
-    Route::apiResource('notificaciones', NotificacionController::class);
-    Route::apiResource('usuarios', UsuarioController::class);
-    Route::apiResource('empresas', EmpresaController::class);
-    Route::apiResource('equipos', EquipoController::class);
+    // Login para obtener el token
+    Route::post('/login', [AuthController::class, 'login']);
 
-    // --- CATÁLOGOS / AUXILIARES ---
+    // ==========================================
+    //            RUTAS PROTEGIDAS
+    //    (Requieren Header -> Authorization: Bearer <token>)
+    // ==========================================
 
-    Route::apiResource('prioridades', PrioridadController::class);
-    Route::apiResource('estado-tarea', EstadoTareaController::class);
-    Route::apiResource('estado-proyecto', EstadoProyectoController::class);
-    Route::apiResource('roles-empresa', RolEmpresaController::class);
-    Route::apiResource('roles-equipo', RolEquipoController::class);
-    Route::apiResource('tipos-notificacion', TipoNotificacionController::class);
-    Route::apiResource('canales-notificacion', CanalNotificacionController::class);
+    Route::middleware('auth:sanctum')->group(function () {
 
-    // --- TABLAS PIVOTE (Relaciones Muchos a Muchos) ---
-    // Estas se mantienen manuales porque requieren dos IDs en la URL (Composite Keys)
+        // --- Gestión de Sesión ---
+        Route::post('/logout', [AuthController::class, 'logout']);
 
-    // USUARIO_EQUIPO
-    Route::get('usuarios-equipo', [UsuarioEquipoController::class, 'index']);
-    Route::post('usuarios-equipo', [UsuarioEquipoController::class, 'store']);
-    Route::get('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'show']);
-    Route::put('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'update']);
-    Route::patch('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'update']);
-    Route::delete('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'destroy']);
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
 
-    // USUARIO_EMPRESA
-    Route::get('usuarios-empresa', [UsuarioEmpresaController::class, 'index']);
-    Route::post('usuarios-empresa', [UsuarioEmpresaController::class, 'store']);
-    Route::get('usuarios-empresa/{id_usuario}/{id_empresa}', [UsuarioEmpresaController::class, 'show']); 
-    Route::put('usuarios-empresa/{id_usuario}/{id_empresa}', [UsuarioEmpresaController::class, 'update']);
-    Route::patch('usuarios-empresa/{id_usuario}/{id_empresa}', [UsuarioEmpresaController::class, 'update']);
-    Route::delete('usuarios-empresa/{id_usuario}/{id_empresa}', [UsuarioEmpresaController::class, 'destroy']);
+        // --- Entidades Principales (CRUD Automático) ---
+        Route::apiResource('proyectos', ProyectoController::class);
+        Route::apiResource('tareas', TareaController::class);
+        Route::apiResource('comentarios', ComentarioController::class);
+        Route::apiResource('notificaciones', NotificacionController::class);
+        Route::apiResource('usuarios', UsuarioController::class);
+        Route::apiResource('empresas', EmpresaController::class);
+        Route::apiResource('equipos', EquipoController::class);
+
+        // --- Catálogos / Tablas Auxiliares ---
+        Route::apiResource('prioridades', PrioridadController::class);
+        Route::apiResource('estado-tarea', EstadoTareaController::class);
+        Route::apiResource('estado-proyecto', EstadoProyectoController::class);
+        Route::apiResource('roles-empresa', RolEmpresaController::class);
+        Route::apiResource('roles-equipo', RolEquipoController::class);
+        Route::apiResource('tipos-notificacion', TipoNotificacionController::class);
+        Route::apiResource('canales-notificacion', CanalNotificacionController::class);
+
+        // --- Tablas Pivote (Rutas Manuales por doble ID) ---
+
+        // Usuarios en Equipos
+        Route::get('usuarios-equipo', [UsuarioEquipoController::class, 'index']);
+        Route::post('usuarios-equipo', [UsuarioEquipoController::class, 'store']);
+        Route::get('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'show']);
+        Route::put('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'update']);
+        Route::delete('usuarios-equipo/{id_usuario}/{id_equipo}', [UsuarioEquipoController::class, 'destroy']);
+
+        // Usuarios en Empresas
+        Route::get('usuarios-empresa', [UsuarioEmpresaController::class, 'index']);
+        Route::post('usuarios-empresa', [UsuarioEmpresaController::class, 'store']);
+        // Nota: Revisa si tu controlador espera 1 ID o 2 IDs para show/update/delete.
+        // Aquí asumo 1 ID (id de la relación) basado en tu código anterior,
+        // si usas composite keys como en equipo, cámbialo al formato /{id_usuario}/{id_empresa}
+        Route::get('usuarios-empresa/{id}', [UsuarioEmpresaController::class, 'show']);
+        Route::put('usuarios-empresa/{id}', [UsuarioEmpresaController::class, 'update']);
+        Route::delete('usuarios-empresa/{id}', [UsuarioEmpresaController::class, 'destroy']);
+    });
 });
