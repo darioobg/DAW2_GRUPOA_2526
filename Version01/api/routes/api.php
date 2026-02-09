@@ -23,7 +23,7 @@ use App\Http\Controllers\UsuarioEquipoController;
 Route::prefix('v1')->group(function () {
     // PROYECTO
 
-    Route::get('proyectos/buscar', [ProyectoController::class, 'buscar']);  // Ruta de búsqueda añadida
+    // Ruta de búsqueda añadida
     Route::get('proyectos', [ProyectoController::class, 'index']);
     Route::post('proyectos', [ProyectoController::class, 'store']);
     Route::get('proyectos/{id}', [ProyectoController::class, 'show']);
