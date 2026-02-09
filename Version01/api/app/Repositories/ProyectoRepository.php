@@ -17,6 +17,7 @@ class ProyectoRepository
     {
         $query = Proyecto::query();
 
+        // Filtros explícitos
         if (!empty($filters['nombre'])) {
             $query->where('nombre', 'like', '%' . $filters['nombre'] . '%');
         }
@@ -33,7 +34,55 @@ class ProyectoRepository
             $query->where('fecha_inicio', '<=', $filters['fecha_inicio_hasta']);
         }
 
+        // Si hay búsqueda general 'q' (Soporta buscar en nombre y descripción)
+        if (!empty($filters['q'])) {
+            $qString = $filters['q'];
+            $query->where(function ($q) use ($qString) {
+                $q
+                    ->where('nombre', 'like', '%' . $qString . '%')
+                    ->orWhere('descripcion', 'like', '%' . $qString . '%');
+            });
+        }
+
         return $query->orderBy('fecha_creacion', 'desc')->get();
+    }
+
+    /**
+     * Búsqueda general (usada para endpoint /proyectos/buscar?q=...)
+     * Puede ajustarse según se requiera buscar solo en nombre o en varios campos.
+     */
+    public function buscar(array $filtros): Collection
+    {
+        $query = Proyecto::query();
+
+        if (!empty($filtros['q'])) {
+            $query->where(function ($q) use ($filtros) {
+                $q
+                    ->where('nombre', 'like', "%{$filtros['q']}%")
+                    ->orWhere('descripcion', 'like', "%{$filtros['q']}%");
+            });
+        }
+
+        if (!empty($filtros['nombre'])) {
+            $query->where('nombre', 'like', "%{$filtros['nombre']}%");
+        }
+
+        if (!empty($filtros['id_estado_proyecto'])) {
+            $query->where('id_estado_proyecto', $filtros['id_estado_proyecto']);
+        }
+
+        if (!empty($filtros['fecha_inicio_desde'])) {
+            $query->whereDate('fecha_inicio', '>=', $filtros['fecha_inicio_desde']);
+        }
+
+        if (!empty($filtros['fecha_inicio_hasta'])) {
+            $query->whereDate('fecha_inicio', '<=', $filtros['fecha_inicio_hasta']);
+        }
+
+        return $query
+            ->orderBy('nombre', 'asc')
+            ->limit(20)
+            ->get();
     }
 
     public function obtenerPorId(int $id): ?Proyecto

@@ -15,6 +15,7 @@ class ProyectoRequest extends FormRequest
 
     public function rules(): array
     {
+        // Solo validación para creación/actualización de proyecto.
         return [
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',

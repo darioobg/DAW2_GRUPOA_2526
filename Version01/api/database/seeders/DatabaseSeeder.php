@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             EquipoSeeder::class,
             EstadoProyectoSeeder::class,
             ProyectoSeeder::class,
+            PrioridadSeeder::class,
+            UserSeeder::class,
+            EstadoTareaSeeder::class,
+            TareaSeeder::class,
         ]);
     }
 }

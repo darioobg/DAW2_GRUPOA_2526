@@ -21,6 +21,16 @@ class ProyectoController extends Controller
         return response()->json($proyectos, 200);
     }
 
+    public function buscar(ProyectoFiltroRequest $request): JsonResponse
+    {
+        return response()->json(
+            $this->service->buscar(
+                $request->validated()
+            ),
+            200
+        );
+    }
+
     public function show(int $id): JsonResponse
     {
         $proyecto = $this->service->obtener($id);

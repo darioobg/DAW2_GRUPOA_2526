@@ -28,6 +28,21 @@ class ProyectoService
             ->toArray();
     }
 
+    /**
+     * Busca proyectos por un término de búsqueda.
+     *
+     * @param string|null $query
+     * @return array
+     */
+    public function buscar(array $filtros): array
+    {
+        $proyectos = $this->repo->buscar($filtros);
+
+        return $proyectos
+            ->map(fn(Proyecto $p) => $this->toViewModel($p))
+            ->toArray();
+    }
+
     public function obtener(int $id): array
     {
         $proyecto = $this->repo->obtenerPorId($id);

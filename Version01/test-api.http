@@ -11,6 +11,13 @@ Accept: application/json
 
 ###
 
+### 🟨 GET buscar proyectos (por término)
+# Reemplaza "prueba" por un término de búsqueda relevante
+GET http://127.0.0.1:8000/api/v1/proyectos/buscar?q=reservas
+Accept: application/json
+
+###
+
 ### 🟢 POST create proyecto (valid data)
 POST http://127.0.0.1:8000/api/v1/proyectos
 Content-Type: application/json

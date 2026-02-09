@@ -35,7 +35,15 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($request->expectsJson()) {
+        if ($request->is('api/*')) {
+            // 422 - Validación
+            if ($exception instanceof ValidationException) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $exception->errors(),
+                ], 422);
+            }
+
             // 404 - Modelo no encontrado
             if ($exception instanceof ModelNotFoundException) {
                 return response()->json([
@@ -69,7 +77,7 @@ class Handler extends ExceptionHandler
                 ], 400);
             }
 
-            // 500 - Error interno
+            // 500 - Error interno REAL
             return response()->json([
                 'success' => false,
                 'error' => [

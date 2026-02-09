@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Empresa;
-use App\Models\Equipo;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EquipoSeeder extends Seeder
 {
@@ -14,33 +12,32 @@ class EquipoSeeder extends Seeder
      */
     public function run(): void
     {
-        $empresa = Empresa::first();
-
-        if (!$empresa) {
-            // Optionally throw an exception or log something here
-            return;
-        }
-
-        $equipos = [
+        // Datos de prueba para la tabla 'equipo' usando solo los campos definidos en la migración
+        DB::table('equipo')->insert([
             [
+                'id_empresa' => 1,
                 'nombre' => 'Desarrollo Backend',
-                'descripcion' => 'El equipo encargado del desarrollo, mantenimiento y revisión de APIs y servicios internos del sistema.',
-                'fecha_creacion' => Carbon::parse('2024-04-15 10:00:00'),
+                'descripcion' => 'Equipo encargado del desarrollo, mantenimiento y revisión de APIs y servicios internos.',
+                'fecha_creacion' => '2024-04-15',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
+                'id_empresa' => 1,
                 'nombre' => 'Equipo de Diseño UX/UI',
                 'descripcion' => 'Responsables del diseño de experiencia de usuario y las interfaces visuales de las aplicaciones.',
-                'fecha_creacion' => Carbon::parse('2024-04-20 09:30:00'),
-            ]
-        ];
-
-        foreach ($equipos as $equipo) {
-            Equipo::create([
-                'id_empresa' => $empresa->id,
-                'nombre' => $equipo['nombre'],
-                'descripcion' => $equipo['descripcion'],
-                'fecha_creacion' => $equipo['fecha_creacion'],
-            ]);
-        }
+                'fecha_creacion' => '2024-04-20',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id_empresa' => 2,
+                'nombre' => 'Infraestructura y DevOps',
+                'descripcion' => 'Gestionan la infraestructura en la nube, CI/CD y el soporte de sistemas.',
+                'fecha_creacion' => '2024-05-01',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
