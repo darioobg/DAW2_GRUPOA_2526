@@ -155,11 +155,11 @@ class UsuarioService
     {
         return [
             'id'           => $u->id,
-            'name'       => $u->name,
+            'name'         => $u->name,
             'apellidos'    => $u->apellidos,
             'email'        => $u->email,
-            'fechaRegistro'=> $u->fecha_registro?->toDateString(),
-            'ultimoAcceso' => $u->ultimoAcceso?->toDateString(),
+            'fechaRegistro'=> $this->formatDate($u->fecha_registro ?? $u->fechaRegistro ?? null),
+            'ultimoAcceso' => $this->formatDate($u->ultimo_acceso ?? $u->ultimoAcceso ?? null),
             'activo'       => (bool)$u->activo,
             'creadoHace'   => $u->created_at
                 ? Carbon::parse($u->created_at)->diffForHumans()
@@ -177,6 +177,21 @@ class UsuarioService
             return Carbon::parse($value)->toDateString();
         } catch (\Throwable $e) {
             throw new Exception("El campo {$campo} no tiene un formato de fecha válido.");
+        }
+    }
+
+    private function formatDate($value): ?string
+    {
+        if ($value === null) return null;
+
+        if ($value instanceof \Carbon\Carbon) {
+            return $value->toDateString();
+        }
+
+        try {
+            return Carbon::parse($value)->toDateString();
+        } catch (\Throwable $e) {
+            return null;
         }
     }
 }
