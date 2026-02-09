@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Proyecto
- * 
+ *
  * @property int $id
  * @property int $id_equipo
  * @property string $nombre
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_estado_proyecto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Equipo $equipo
  * @property EstadoProyecto $estado_proyecto
  * @property Collection|Tarea[] $tareas

@@ -1,0 +1,24 @@
+/* Layout general */
+.app-layout {
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #1f2937;
+  color: white;
+}
+
+/* Header */
+.header {
+  height: 60px;
+  border-bottom: 1px solid #ddd;
+  background-color: #ffffff;
+}
+
+/* Main content */
+.main-content {
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 60px);
+}

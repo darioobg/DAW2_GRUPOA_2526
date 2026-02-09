@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Services\TareaService;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +15,15 @@ class TareaController extends Controller
 
     public function index(): JsonResponse
     {
-        return response()->json($this->service->listar());
+        $data = $this->service->listar();
+        // dd($data[0]);
+
+        //   dd($data);
+        // echo '<pre>';
+        // var_dump($this->service->listar());
+        // exit;
+
+        return response()->json($data);
     }
 
     public function show(int $id): JsonResponse
