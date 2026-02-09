@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UsuarioEquipo
- * 
+ *
  * @property int $id_usuario
  * @property int $id_equipo
  * @property int $id_rol_equipo
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $activo
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Equipo $equipo
  * @property RolEquipo $rol_equipo
  * @property Usuario $usuario
@@ -59,6 +59,6 @@ class UsuarioEquipo extends Model
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class, 'id_usuario');
+		return $this->belongsTo(User::class, 'id_usuario');
 	}
 }

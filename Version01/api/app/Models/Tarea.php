@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Tarea
- * 
+ *
  * @property int $id
  * @property int $id_proyectos
  * @property int $id_prioridad
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $orden_kanban
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Usuario $usuario
  * @property EstadoTarea $estado_tarea
  * @property Prioridad $prioridad
@@ -66,7 +66,7 @@ class Tarea extends Model
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class, 'id_asignado_a');
+		return $this->belongsTo(User::class, 'id_asignado_a');
 	}
 
 	public function estado_tarea()
