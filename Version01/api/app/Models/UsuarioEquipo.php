@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Equipo $equipo
  * @property RolEquipo $rol_equipo
- * @property Usuario $usuario
+ * @property User $usuario
  *
  * @package App\Models
  */

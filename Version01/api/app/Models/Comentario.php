@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Tarea $tarea
- * @property Usuario $usuario
+ * @property User $usuario
  *
  * @package App\Models
  */

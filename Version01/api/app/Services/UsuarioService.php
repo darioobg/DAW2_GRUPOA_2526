@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Usuario;
-use App\Repositories\UsuarioRepository;
+use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Exception;
@@ -11,7 +11,7 @@ use Exception;
 class UsuarioService
 {
     public function __construct(
-        private UsuarioRepository $repo
+        private UserRepository $repo
     ) {}
 
     public function listar(): array
@@ -19,7 +19,7 @@ class UsuarioService
         $usuarios = $this->repo->obtenerTodos();
 
         return $usuarios
-            ->map(fn (Usuario $u) => $this->toViewModel($u))
+            ->map(fn (User $u) => $this->toViewModel($u))
             ->toArray();
     }
 
@@ -36,7 +36,7 @@ class UsuarioService
 
     public function crear(array $datos): array
     {
-        $nombre = trim($datos['nombre'] ?? '');
+        $nombre = trim($datos['name'] ?? '');
         if ($nombre === '') {
             throw new Exception('El nombre es obligatorio.');
         }
@@ -65,12 +65,12 @@ class UsuarioService
         }
 
         $nuevo = $this->repo->crear([
-            'nombre'         => $nombre,
+            'name'           => $nombre,
             'apellidos'      => $apellidos,
             'email'          => $email,
-            'password'  => Hash::make($password),
+            'password'       => Hash::make($password),
             'fecha_registro' => $datos['fecha_registro'] ?? now()->toDateString(),
-            'ultimoAcceso'  => $datos['ultimo_acceso'] ?? null,
+            'ultimoAcceso'   => $datos['ultimo_acceso'] ?? null,
             'activo'         => (bool)$activo,
         ]);
 
@@ -86,10 +86,10 @@ class UsuarioService
 
         $payload = [];
 
-        if (array_key_exists('nombre', $datos)) {
-            $nombre = trim((string)$datos['nombre']);
+        if (array_key_exists('name', $datos)) {
+            $nombre = trim((string)$datos['name']);
             if ($nombre === '') throw new Exception('El nombre no puede estar vacío.');
-            $payload['nombre'] = $nombre;
+            $payload['name'] = $nombre;
         }
 
         if (array_key_exists('apellidos', $datos)) {
@@ -112,7 +112,7 @@ class UsuarioService
             if (strlen($password) < 8) {
                 throw new Exception('La contraseña debe tener al menos 8 caracteres.');
             }
-            $payload['password_hash'] = Hash::make($password);
+            $payload['password'] = Hash::make($password);
         }
 
         if (array_key_exists('fecha_registro', $datos)) {
@@ -121,7 +121,7 @@ class UsuarioService
 
         if (array_key_exists('ultimo_acceso', $datos)) {
             // puede ser null
-            $payload['ultimo_acceso'] = $datos['ultimo_acceso'] === null
+            $payload['ultimoAcceso'] = $datos['ultimo_acceso'] === null
                 ? null
                 : $this->parseDateOrThrow($datos['ultimo_acceso'], 'ultimo_acceso');
         }
@@ -151,15 +151,15 @@ class UsuarioService
         }
     }
 
-    private function toViewModel(Usuario $u): array
+    private function toViewModel(User $u): array
     {
         return [
             'id'           => $u->id,
-            'nombre'       => $u->nombre,
+            'name'       => $u->name,
             'apellidos'    => $u->apellidos,
             'email'        => $u->email,
             'fechaRegistro'=> $u->fecha_registro?->toDateString(),
-            'ultimoAcceso' => $u->ultimo_acceso?->toDateString(),
+            'ultimoAcceso' => $u->ultimoAcceso?->toDateString(),
             'activo'       => (bool)$u->activo,
             'creadoHace'   => $u->created_at
                 ? Carbon::parse($u->created_at)->diffForHumans()

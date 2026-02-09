@@ -26,8 +26,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $orden_kanban
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+<<<<<<< Updated upstream
  * 
  * @property Usuario $usuario
+=======
+ *
+ * @property User $usuario
+>>>>>>> Stashed changes
  * @property EstadoTarea $estado_tarea
  * @property Prioridad $prioridad
  * @property Proyecto $proyecto

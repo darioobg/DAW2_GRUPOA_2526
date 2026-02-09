@@ -3,9 +3,17 @@ POST http://127.0.0.1:8000/api/proyectos
 Content-Type: application/json
 
 {
+<<<<<<< Updated upstream
   "nombre": "Proyecto DAW",
   "descripcion": "Tablero principal del módulo",
   "color_fondo": "#0c6bf2"
+=======
+  "nombre": "Nuevo Proyecto API",
+  "descripcion": "Proyecto creado desde REST Client",
+  "id_equipo": 2,
+  "fecha_fin_prevista": "2024-07-05",
+  "id_estado_proyecto": 1
+>>>>>>> Stashed changes
 }
 
 ### Listar proyectos

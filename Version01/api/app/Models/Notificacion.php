@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CanalNotificacion $canal_notificacion
  * @property Tarea $tarea
  * @property TipoNotificacion $tipo_notificacion
- * @property Usuario $usuario
+ * @property User $usuario
  *
  * @package App\Models
  */
