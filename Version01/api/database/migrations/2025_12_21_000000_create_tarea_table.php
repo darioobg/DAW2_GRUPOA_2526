@@ -12,14 +12,10 @@ return new class extends Migration {
     {
         Schema::create('tarea', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_proyectos');
-            $table->unsignedBigInteger('id_prioridad');
-            $table->unsignedBigInteger('id_asignado_a');
-            $table->unsignedBigInteger('id_estado');
-            $table->foreign('id_proyectos')->references('id')->on('proyectos');
-            $table->foreign('id_estado')->references('id')->on('estado_tarea');
-            $table->foreign('id_asignado_a')->references('id')->on('users');
-            $table->foreign('id_prioridad')->references('id')->on('prioridad');
+            $table->foreignId('id_proyectos')->constrained('proyectos')->onDeleteCascade()->onUpdateCascade();
+            $table->foreignId('id_estado')->constrained('estado_tarea')->onDeleteRestrict()->onUpdateCascade();
+            $table->foreignId('id_asignado_a')->constrained('users')->onDeleteCascade()->onUpdateCascade();
+            $table->foreignId('id_prioridad')->constrained('prioridad')->onDeleteRestrict()->onUpdateCascade();
             $table->string('titulo');
             $table->text('descripcion')->nullable();
             $table->date('fecha_creacion');

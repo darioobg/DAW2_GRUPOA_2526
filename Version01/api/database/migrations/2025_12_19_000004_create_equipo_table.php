@@ -13,13 +13,12 @@ return new class extends Migration
         {
             Schema::create('equipo', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('id_empresa');
-                $table->foreign('id_empresa')->references('id')->on('empresa');
+                $table->foreignId('id_empresa')->constrained('empresa')->onDeleteCascade()->onUpdateCascade();
                 $table->string('nombre');
                 $table->text('descripcion')->nullable();
                 $table->date('fecha_creacion');
                 $table->timestamps();
-      
+
             });
         }
 
