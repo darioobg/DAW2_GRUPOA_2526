@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import Tableros from "../pages/Tableros";
-import ProyectosPage from "../pages/ProyectosPage";
+import DashboardPage from "../pages/DashboardPage";
 import TablerosDetallePage from "../pages/TableroDetallePage";
-import MainLayout from "../layout/MainLayout";
+import AppLayout from "../layout/AppLayout";
+import TableroDetallePage from "../pages/TableroDetallePage";
 
 export default function AppRouter() {
   return (
@@ -11,33 +12,17 @@ export default function AppRouter() {
       <Routes>
         {/* Ruta pública */}
         <Route path="/login" element={<Login />} />
+        {/* Rutas protegidas con layout */}
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<DashboardPage />} />
 
-        {/* Rutas con layout */}
-        <Route
-          path="/"
-          element={
-            <MainLayout>
-              <ProyectosPage />
-            </MainLayout>
-          }
-        />
+          <Route path="tableros" element={<Tableros />} />
+          <Route path="tableros/:idTablero" element={<TablerosDetallePage />} />
+          <Route path="tablerosstate" element={<TableroDetallePage />} />
 
-        <Route
-          path="/tableros"
-          element={
-            <MainLayout>
-              <Tableros />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/tableros/:idTablero"
-          element={
-            <MainLayout>
-              <TablerosDetallePage />
-            </MainLayout>
-          }
-        />
+          {/* Ruta catch-all opcional, para no encontradas */}
+          {/* <Route path="*" element={<NoPage />} /> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

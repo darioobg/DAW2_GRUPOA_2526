@@ -24,7 +24,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nombre": "Nuevo Proyecto API",
+  "nombre": "Nuevo Proyecto API2",
   "descripcion": "Proyecto creado desde REST Client",
   "id_equipo": 2,
   "fecha_creacion": "2024-06-15",
@@ -41,7 +41,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nombre": "Jino Olivera",
+  "nombre": "Jino Olivera 2",
   "descripcion": "Prueba de error de validación",
   "id_equipo": 2,
   "fecha_creacion": "2024-06-15",
@@ -59,7 +59,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nombre": "Proyecto API Actualizado",
+  "nombre": "Proyecto API2 Actualizado",
   "descripcion": "Descripción actualizada",
   "id_equipo": 2,
   "fecha_creacion": "2024-06-15",

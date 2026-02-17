@@ -87,7 +87,7 @@ class ProyectoRepository
 
     public function obtenerPorId(int $id): ?Proyecto
     {
-        return Proyecto::find($id);
+        return Proyecto::with('tareas')->find($id);
     }
 
     public function crear(array $datos): Proyecto

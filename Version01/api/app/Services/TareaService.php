@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Tarea;
 use App\Repositories\TareaRepository;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Exception;
 
@@ -76,6 +77,37 @@ class TareaService
         ]);
 
         return $this->toViewModel($nuevo);
+    }
+
+    public function moverTarea(int $id, int $nuevoEstado, int $nuevoOrden): void
+    {
+        DB::transaction(function () use ($id, $nuevoEstado, $nuevoOrden) {
+            $tarea = Tarea::findOrFail($id);
+
+            $estadoOrigen = $tarea->id_estado;
+
+            // 1️⃣ Ajustar tareas del destino
+            Tarea::where('id_estado', $nuevoEstado)
+                ->where('orden_kanban', '>=', $nuevoOrden)
+                ->increment('orden_kanban');
+
+            // 2️⃣ Actualizar tarea movida
+            $tarea->update([
+                'id_estado' => $nuevoEstado,
+                'orden_kanban' => $nuevoOrden
+            ]);
+
+            // 3️⃣ Reordenar origen si cambió de columna
+            if ($estadoOrigen !== $nuevoEstado) {
+                $tareasOrigen = Tarea::where('id_estado', $estadoOrigen)
+                    ->orderBy('orden_kanban')
+                    ->get();
+
+                foreach ($tareasOrigen as $index => $t) {
+                    $t->update(['orden_kanban' => $index + 1]);
+                }
+            }
+        });
     }
 
     public function actualizar(int $id, array $datos): array
@@ -180,7 +212,7 @@ class TareaService
             'fechaCierre' => $t->fecha_cierre?->toDateString(),
             'ordenKanban' => $t->orden_kanban,
             'creadoHace' => $t->fecha_creacion
-                ? Carbon::parse($t->fecha_creación)->diffForHumans()
+                ? Carbon::parse($t->fecha_creacion)->diffForHumans()
                 : null,
         ];
     }

@@ -1,110 +1,75 @@
-const API_URL = "http://127.0.0.1:8000/api/v1/proyectos";
+// core/NegocioProyectos.js
 
-/**
- * Obtener todos los proyectos
- */
-export async function getProyectos() {
-  const response = await fetch(API_URL);
-  if (!response.ok) {
-    throw new Error("Error al obtener proyectos");
-  }
-  return await response.json();
-}
+const negocioProyectos = (function () {
+  const URL = "http://127.0.0.1:8000/api/v1/proyectos";
 
-/**
- * Obtener un proyecto por ID
- */
-export async function getProyectoById(id) {
-  const response = await fetch(`${API_URL}/${id}`);
-  if (!response.ok) {
-    throw new Error("Error al obtener el proyecto");
-  }
-  return await response.json();
-}
+  async function obtenerProyectos() {
+    const res = await fetch(URL);
 
-/**
- * Crear un nuevo proyecto
- */
-export async function createProyecto(data) {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+    if (!res.ok) {
+      throw new Error("Error al obtener proyectos");
+    }
 
-  if (!response.ok) {
-    throw new Error("Error al crear proyecto");
+    return await res.json();
   }
 
-  return await response.json();
-}
+  async function obtenerProyecto(id) {
+    const res = await fetch(`${URL}/${id}`);
 
-/**
- * Actualizar proyecto
- */
-export async function updateProyecto(id, data) {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+    if (!res.ok) {
+      throw new Error("Error al obtener proyecto");
+    }
 
-  if (!response.ok) {
-    throw new Error("Error al actualizar proyecto");
+    return await res.json();
   }
 
-  return await response.json();
-}
+  async function crearProyecto(data) {
+    const res = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-/**
- * Eliminar proyecto
- */
-export async function deleteProyecto(id) {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
-  });
+    if (!res.ok) {
+      throw new Error("Error al crear proyecto");
+    }
 
-  if (!response.ok) {
-    throw new Error("Error al eliminar proyecto");
+    return await res.json();
   }
 
-  return true;
-}
+  async function actualizarProyecto(id, data) {
+    const res = await fetch(`${URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-/**
- * Buscar proyectos
- */
-export async function buscarProyectos(texto) {
-  const response = await fetch(
-    `${API_URL}/buscar?texto=${encodeURIComponent(texto)}`
-  );
+    if (!res.ok) {
+      throw new Error("Error al actualizar proyecto");
+    }
 
-  if (!response.ok) {
-    throw new Error("Error al buscar proyectos");
+    return await res.json();
   }
 
-  return await response.json();
-}
+  async function eliminarProyecto(id) {
+    const res = await fetch(`${URL}/${id}`, {
+      method: "DELETE",
+    });
 
-/**
- * Filtrar proyectos
- */
-export async function filtrarProyectos({ id_estado_proyecto, id_equipo }) {
-  const params = new URLSearchParams();
+    if (!res.ok) {
+      throw new Error("Error al eliminar proyecto");
+    }
 
-  if (id_estado_proyecto)
-    params.append("id_estado_proyecto", id_estado_proyecto);
-  if (id_equipo) params.append("id_equipo", id_equipo);
-
-  const response = await fetch(`${API_URL}/filtrar?${params.toString()}`);
-
-  if (!response.ok) {
-    throw new Error("Error al filtrar proyectos");
+    return true;
   }
 
-  return await response.json();
-}
+  return {
+    obtenerProyectos,
+    obtenerProyecto,
+    crearProyecto,
+    actualizarProyecto,
+    eliminarProyecto,
+  };
+})();
+
+export default negocioProyectos;

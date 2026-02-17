@@ -14,6 +14,13 @@ const ColumnaKanban = ({ estado, tareas, onDragStart }) => {
       {/* Encabezado de la columna */}
       <div className="card-header bg-white text-center border-0">
         <h5 className="card-title mb-0">{estado}</h5>
+
+        <button
+          className="btn btn-sm btn-outline-primary w-100 mb-2"
+          onClick={() => onNuevaTarea(estadoKey)}
+        >
+          + Nueva tarea
+        </button>
       </div>
 
       {/* Lista de tareas */}

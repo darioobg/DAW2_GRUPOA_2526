@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function () {
     // PROYECTO
 
     // Ruta de búsqueda añadida
+    Route::patch('/tareas/{id}/mover', [TareaController::class, 'mover']);
     Route::get('proyectos', [ProyectoController::class, 'index']);
     Route::post('proyectos', [ProyectoController::class, 'store']);
     Route::get('proyectos/{id}', [ProyectoController::class, 'show']);

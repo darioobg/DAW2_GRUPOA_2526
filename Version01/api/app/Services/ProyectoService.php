@@ -186,6 +186,18 @@ class ProyectoService
             'creadoHace' => $p->created_at
                 ? Carbon::parse($p->created_at)->diffForHumans()
                 : null,
+            // 👇 AÑADIR ESTO
+            'tareas' => $p->tareas->map(function ($t) {
+                return [
+                    'id' => $t->id,
+                    'titulo' => $t->titulo,
+                    'descripcion' => $t->descripcion,
+                    'idEstado' => $t->id_estado,
+                    'ordenKanban' => $t->orden_kanban,
+                    'fechaCreacion' => $t->fecha_creacion,
+                    'fechaLimite' => $t->fecha_limite,
+                ];
+            })->values()->toArray(),
         ];
     }
 

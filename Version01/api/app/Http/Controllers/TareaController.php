@@ -60,6 +60,22 @@ class TareaController extends Controller
         }
     }
 
+    public function mover(Request $request, int $id)
+    {
+        $request->validate([
+            'idEstado' => 'required|integer',
+            'ordenKanban' => 'required|integer',
+        ]);
+
+        $this->service->moverTarea(
+            $id,
+            $request->idEstado,
+            $request->ordenKanban
+        );
+
+        return response()->json(['message' => 'Tarea movida correctamente'], 200);
+    }
+
     public function destroy(int $id): JsonResponse
     {
         try {
