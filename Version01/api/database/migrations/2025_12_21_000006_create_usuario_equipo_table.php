@@ -11,13 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('usuario_equipo', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_usuario');
-            $table->unsignedBigInteger('id_equipo');
-            $table->unsignedBigInteger('id_rol_equipo');
-
-            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_equipo')->references('id')->on('equipo')->onDelete('cascade');
-            $table->foreign('id_rol_equipo')->references('id')->on('rol_equipo');
+            $table->foreignId('id_usuario')->constrained('users')->onDeleteCascade()->onUpdateCascade();
+            $table->foreignId('id_equipo')->constrained('equipo')->onDeleteCascade()->onUpdateCascade();
+            $table->foreignId('id_rol_equipo')->constrained('rol_equipo')->onDeleteRestrict()->onUpdateCascade();
             $table->primary(['id_usuario', 'id_equipo']);
             $table->date('fecha_alta');
             $table->boolean('activo');

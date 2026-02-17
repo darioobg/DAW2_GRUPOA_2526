@@ -6,12 +6,18 @@
 
 namespace App\Models;
 
+use App\Http\Middleware\Authenticate;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -23,14 +29,19 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
 	protected $table = 'users';
 
-	protected $casts = [
-		'email_verified_at' => 'datetime'
-	];
 
+protected $casts = [
+		'fecha_registro' => 'datetime',
+		'ultimoAcceso' => 'datetime',
+		'activo' => 'bool',
+        'email_verified_at' => 'datetime'
+
+	];
 	protected $hidden = [
 		'password',
 		'remember_token'
@@ -38,9 +49,35 @@ class User extends Model
 
 	protected $fillable = [
 		'name',
+        'apellidos',
 		'email',
 		'email_verified_at',
 		'password',
-		'remember_token'
+		'remember_token',
+        'fecha_registro',
+		'ultimoAcceso',
+		'activo'
 	];
+    public function comentarios()
+	{
+		return $this->hasMany(Comentario::class, 'id_usuario');
+	}
+
+	public function notificacions()
+	{
+		return $this->hasMany(Notificacion::class, 'id_usuario_destino');
+	}
+
+	public function tareas()
+	{
+		return $this->hasMany(Tarea::class, 'id_asignado_a');
+	}
+
+	public function equipos()
+	{
+		return $this->belongsToMany(Equipo::class, 'usuario_equipo', 'id_usuario', 'id_equipo')
+					->withPivot('id_rol_equipo', 'fecha_alta', 'activo')
+					->withTimestamps();
+	}
 }
+

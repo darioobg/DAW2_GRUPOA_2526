@@ -12,10 +12,8 @@ return new class extends Migration {
     {
         Schema::create('comentario', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tarea');
-            $table->foreign('id_tarea')->references('id')->on('tarea');
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->foreignId('id_tarea')->constrained('tarea')->onDeleteCascade()->onUpdateCascade();
+            $table->foreignId('id_usuario')->constrained('users')->onDeleteCascade()->onUpdateCascade();
             $table->string('texto');
             $table->date('fecha_creacion');
             $table->date('fecha_edicion');

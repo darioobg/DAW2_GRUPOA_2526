@@ -6,27 +6,42 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Example user factory calls (uncomment if needed):
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
+        // 1. CATÁLOGOS (Sin dependencias)
         $this->call([
-            EmpresaSeeder::class,
-            EquipoSeeder::class,
-            EstadoProyectoSeeder::class,
-            ProyectoSeeder::class,
             PrioridadSeeder::class,
-            UserSeeder::class,
             EstadoTareaSeeder::class,
-            TareaSeeder::class,
+            EstadoProyectoSeeder::class,
+            RolEmpresaSeeder::class,        // Nuevo
+            RolEquipoSeeder::class,         // Nuevo
+            TipoNotificacionSeeder::class,  // Nuevo
+            CanalNotificacionSeeder::class, // Nuevo
+        ]);
+
+        // 2. ENTIDADES PRINCIPALES (Crean los IDs 1)
+        $this->call([
+            UserSeeder::class,     // Crea usuarios
+            EmpresaSeeder::class,  // Crea empresas
+        ]);
+
+        // 3. DEPENDIENTES DE NIVEL 1
+        $this->call([
+            EquipoSeeder::class,         // Depende de Empresa
+            UsuarioEmpresaSeeder::class, // Nuevo (Depende de User, Empresa, Rol)
+        ]);
+
+        // 4. DEPENDIENTES DE NIVEL 2
+        $this->call([
+            ProyectoSeeder::class,       // Depende de Equipo
+            UsuarioEquipoSeeder::class,  // Nuevo (Depende de User, Equipo, Rol)
+        ]);
+
+        // 5. DEPENDIENTES DE NIVEL 3 (Tareas y transaccionales)
+        $this->call([
+            TareaSeeder::class,          // Depende de Proyecto, User, Estados
+            ComentarioSeeder::class,     // Nuevo (Depende de Tarea, User)
+            NotificacionSeeder::class,   // Nuevo (Depende de Tarea, User, Tipos)
         ]);
     }
 }

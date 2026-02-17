@@ -10,28 +10,24 @@ return new class extends Migration {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();  // PK
 
-            $table->unsignedBigInteger('id_equipo');  // FK
             $table->string('nombre');
             $table->text('descripcion');
             $table->date('fecha_creacion');
             $table->date('fecha_inicio');
             $table->date('fecha_fin_prevista');
-            $table->unsignedBigInteger('id_estado_proyecto');  // FK
 
             $table->timestamps();
 
             // FKs
             $table
-                ->foreign('id_equipo')
-                ->references('id')
-                ->on('equipo')
-                ->onDelete('cascade');
+                ->foreignId('id_equipo')
+                ->constrained('equipo')
+                ->onDelete('cascade')->onUpdateCascade();
 
             $table
-                ->foreign('id_estado_proyecto')
-                ->references('id')
-                ->on('estado_proyecto')
-                ->onDelete('restrict');
+                ->foreignId('id_estado_proyecto')
+                ->constrained('estado_proyecto')
+                ->onDelete('restrict')->onUpdateCascade();
         });
     }
 
