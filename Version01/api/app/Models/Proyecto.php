@@ -66,4 +66,9 @@ class Proyecto extends Model
 	{
 		return $this->hasMany(Tarea::class, 'id_proyectos');
 	}
+
+	public function estadoTareas()
+	{
+		return $this->hasMany(\App\Models\EstadoTarea::class, 'id_proyecto');
+	}
 }

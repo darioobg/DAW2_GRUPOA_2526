@@ -61,33 +61,14 @@ class ProyectoService
             throw new Exception('El nombre del proyecto es obligatorio.');
         }
 
-        $idEquipo = (int) ($datos['id_equipo'] ?? 0);
-        if ($idEquipo <= 0) {
-            throw new Exception('El id_equipo es obligatorio.');
-        }
-
-        $idEstado = (int) ($datos['id_estado_proyecto'] ?? 0);
-        if ($idEstado <= 0) {
-            throw new Exception('El id_estado_proyecto es obligatorio.');
-        }
-
-        $fechaInicio = $this->parseDateOrThrow($datos['fecha_inicio'] ?? null, 'fecha_inicio');
-        $fechaFinPrevista = $this->parseDateOrThrow($datos['fecha_fin_prevista'] ?? null, 'fecha_fin_prevista');
-
-        if (Carbon::parse($fechaFinPrevista)->lt(Carbon::parse($fechaInicio))) {
-            throw new Exception('La fecha_fin_prevista no puede ser anterior a la fecha_inicio.');
-        }
-
-        $fechaCreacion = $datos['fecha_creacion'] ?? now()->toDateString();
-
         $nuevo = $this->repo->crear([
-            'id_equipo' => $idEquipo,
             'nombre' => $nombre,
             'descripcion' => $datos['descripcion'] ?? null,
-            'fecha_creacion' => $fechaCreacion,
-            'fecha_inicio' => $fechaInicio,
-            'fecha_fin_prevista' => $fechaFinPrevista,
-            'id_estado_proyecto' => $idEstado,
+            'id_equipo' => $datos['id_equipo'] ?? 1,  // default
+            'id_estado_proyecto' => $datos['id_estado_proyecto'] ?? 1,  // Activo por defecto
+            'fecha_creacion' => $datos['fecha_creacion'] ?? now()->toDateString(),
+            'fecha_inicio' => $datos['fecha_inicio'] ?? null,
+            'fecha_fin_prevista' => $datos['fecha_fin_prevista'] ?? null,
         ]);
 
         return $this->toViewModel($nuevo);
@@ -167,6 +148,30 @@ class ProyectoService
         if (!$ok) {
             throw new Exception('Proyecto no encontrado o no se pudo eliminar.');
         }
+    }
+
+    public function listarPorUsuario(int $userId): array
+    {
+        $proyectos = $this->repo->obtenerPorUsuario($userId);
+
+        return $proyectos->map(function ($p) {
+            return [
+                'id' => $p->id,
+                'nombre' => $p->nombre,
+                'descripcion' => $p->descripcion,
+                'fechaInicio' => $p->fecha_inicio?->toDateString(),
+                'fechaFinPrevista' => $p->fecha_fin_prevista?->toDateString(),
+                'equipo' => [
+                    'id' => $p->equipo->id,
+                    'nombre' => $p->equipo->nombre,
+                ],
+                'estado' => [
+                    'id' => $p->estado_proyecto->id,
+                    'nombre' => $p->estado_proyecto->nombre,
+                ],
+                'cantidadTareas' => $p->tareas->count(),
+            ];
+        })->toArray();
     }
 
     /**

@@ -17,6 +17,15 @@ class EquipoController extends Controller
         return response()->json($this->service->listar());
     }
 
+    public function misEquipos(Request $request): JsonResponse
+    {
+        $user = auth()->user();
+
+        return response()->json(
+            $this->service->listarPorUsuario($user->id)
+        );
+    }
+
     public function show(int $id): JsonResponse
     {
         try {

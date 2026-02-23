@@ -1,17 +1,23 @@
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import Sidebar from "../components/layout/Sidebar";
+import Header from "../components/layout/Header";
 import { Outlet } from "react-router-dom";
 
 function AppLayout() {
   return (
-    <div className="d-flex vh-100">
-      <Sidebar />
+    <div className="d-flex flex-column vh-100">
+      {/* HEADER ARRIBA */}
+      <Header />
 
-      <div className="flex-grow-1 d-flex flex-column">
-        <Header />
+      {/* DEBAJO: SIDEBAR + CONTENIDO */}
+      <div className="d-flex flex-grow-1" style={{ minHeight: 0 }}>
+        {/* SIDEBAR IZQUIERDA */}
+        <Sidebar />
 
-        <main className="flex-grow-1 p-4 overflow-auto">
-          <Outlet />
+        {/* CONTENIDO DERECHA */}
+        <main className="flex-grow-1 p-4 bg-light cont">
+          <div style={{ flex: 1, minHeight: 0 }}>
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

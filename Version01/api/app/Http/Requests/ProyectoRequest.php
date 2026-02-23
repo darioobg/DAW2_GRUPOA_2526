@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
 
 class ProyectoRequest extends FormRequest
 {
@@ -19,10 +20,10 @@ class ProyectoRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
-            'fecha_creacion' => 'required|date',
+            'fecha_creacion' => 'nullable|date',
             'fecha_inicio' => 'nullable|date',
             'fecha_fin_prevista' => 'nullable|date|after_or_equal:fecha_inicio',
-            'id_estado_proyecto' => 'required|integer',
+            'id_estado_proyecto' => 'nullable|integer',
             'id_equipo' => 'nullable|integer',
         ];
     }
@@ -43,6 +44,19 @@ class ProyectoRequest extends FormRequest
             'id_estado_proyecto.integer' => 'El estado del proyecto debe ser un número entero.',
             'id_equipo.integer' => 'El equipo debe ser un número entero.',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        Log::info('PREPARE SE EJECUTA');
+
+        $this->merge([
+            'id_equipo' => $this->id_equipo ?? $this->idEquipo,
+            'fecha_creacion' => $this->fecha_creacion ?? $this->fechaCreacion,
+            'fecha_inicio' => $this->fecha_inicio ?? $this->fechaInicio,
+            'fecha_fin_prevista' => $this->fecha_fin_prevista ?? $this->fechaFinPrevista,
+            'id_estado_proyecto' => $this->id_estado_proyecto ?? $this->idEstadoProyecto,
+        ]);
     }
 
     protected function failedValidation(Validator $validator)

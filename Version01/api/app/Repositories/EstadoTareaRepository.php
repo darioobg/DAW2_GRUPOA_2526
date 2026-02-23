@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EstadoTareaRepository
 {
-    public function obtenerTodos(): Collection
+    public function obtenerPorProyecto(int $idProyecto)
     {
-        return EstadoTarea::orderBy('created_at', 'desc')->get();
+        return EstadoTarea::where('id_proyecto', $idProyecto)
+            ->orderBy('orden')
+            ->get();
     }
 
     public function obtenerPorId(int $id): ?EstadoTarea
@@ -25,7 +27,8 @@ class EstadoTareaRepository
     public function actualizar(int $id, array $datos): ?EstadoTarea
     {
         $estado = EstadoTarea::find($id);
-        if (!$estado) return null;
+        if (!$estado)
+            return null;
 
         $estado->update($datos);
         return $estado->fresh();
@@ -34,7 +37,8 @@ class EstadoTareaRepository
     public function eliminar(int $id): bool
     {
         $estado = EstadoTarea::find($id);
-        if (!$estado) return false;
+        if (!$estado)
+            return false;
 
         return (bool) $estado->delete();
     }

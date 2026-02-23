@@ -45,6 +45,19 @@ class TareaController extends Controller
         }
     }
 
+    public function misTareas(Request $request): JsonResponse
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'No autenticado'], 401);
+        }
+
+        return response()->json(
+            $this->service->listarPorUsuario($user->id)
+        );
+    }
+
     public function update(Request $request, int $id): JsonResponse
     {
         try {

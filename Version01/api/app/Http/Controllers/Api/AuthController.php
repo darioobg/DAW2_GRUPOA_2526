@@ -22,7 +22,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // 3. Comprobar credenciales
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Credenciales incorrectas.',
@@ -32,13 +32,29 @@ class AuthController extends Controller
         // 4. Generar Token
         // 'api-token' es el nombre interno del token
         $token = $user->createToken('api-token')->plainTextToken;
-
+        $equipos = $user
+            ->usuarioEquipos()
+            ->with(['equipo', 'rol_equipo'])
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'idEquipo' => $item->equipo->id,
+                    'nombreEquipo' => $item->equipo->nombre,
+                    'rol' => $item->rol_equipo->nombre,
+                    'activo' => $item->activo
+                ];
+            });
         // 5. Devolver respuesta JSON
         return response()->json([
             'success' => true,
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'equipos' => $equipos,
         ]);
     }
 

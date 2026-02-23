@@ -37,6 +37,15 @@ class TareaService
         return $this->toViewModel($tarea);
     }
 
+    public function listarPorUsuario(int $userId): array
+    {
+        $tareas = $this->repo->obtenerPorUsuario($userId);
+
+        return $tareas
+            ->map(fn($t) => $this->toViewModel($t))
+            ->toArray();
+    }
+
     public function crear(array $datos): array
     {
         $titulo = trim($datos['titulo'] ?? '');
@@ -120,12 +129,12 @@ class TareaService
 
         $payload = [];
 
-        if (array_key_exists('título', $datos)) {
-            $titulo = trim((string) $datos['título']);
+        if (array_key_exists('titulo', $datos)) {
+            $titulo = trim((string) $datos['titulo']);
             if ($titulo === '') {
                 throw new Exception('El título no puede estar vacío.');
             }
-            $payload['título'] = $titulo;
+            $payload['titulo'] = $titulo;
         }
 
         if (array_key_exists('id_proyecto', $datos)) {
@@ -155,17 +164,17 @@ class TareaService
                 : null;
         }
 
-        if (array_key_exists('descripción', $datos)) {
-            $payload['descripción'] = $datos['descripción'];
+        if (array_key_exists('descripcion', $datos)) {
+            $payload['descripcion'] = $datos['descripcion'];
         }
 
-        if (array_key_exists('fecha_creación', $datos)) {
-            $payload['fecha_creación'] = $this->parseDateOrThrow($datos['fecha_creación'], 'fecha_creación');
+        if (array_key_exists('fecha_creacion', $datos)) {
+            $payload['fecha_creacion'] = $this->parseDateOrThrow($datos['fecha_creacion'], 'fecha_creación');
         }
 
-        if (array_key_exists('fecha_límite', $datos)) {
-            $payload['fecha_límite'] = $datos['fecha_límite']
-                ? $this->parseDateOrThrow($datos['fecha_límite'], 'fecha_límite')
+        if (array_key_exists('fecha_limite', $datos)) {
+            $payload['fecha_limite'] = $datos['fecha_limite']
+                ? $this->parseDateOrThrow($datos['fecha_limite'], 'fecha_limite')
                 : null;
         }
 
@@ -201,10 +210,16 @@ class TareaService
     {
         return [
             'id' => $t->id,
+            // IDs (útiles para backend y formularios)
             'idProyecto' => $t->id_proyectos,
             'idEstado' => $t->id_estado,
             'idAsignadoA' => $t->id_asignado_a,
             'idPrioridad' => $t->id_prioridad,
+            // Datos descriptivos (para UI)
+            'proyectoNombre' => $t->proyecto?->nombre,
+            'estadoNombre' => $t->estado_tarea?->nombre,
+            'prioridadNombre' => $t->prioridad?->nombre,
+            'prioridadColor' => $t->prioridad?->color ?? null,
             'titulo' => $t->titulo,
             'descripcion' => $t->descripcion,
             'fechaCreacion' => $t->fecha_creacion?->toDateString(),
@@ -212,7 +227,7 @@ class TareaService
             'fechaCierre' => $t->fecha_cierre?->toDateString(),
             'ordenKanban' => $t->orden_kanban,
             'creadoHace' => $t->fecha_creacion
-                ? Carbon::parse($t->fecha_creacion)->diffForHumans()
+                ? $t->fecha_creacion->diffForHumans()
                 : null,
         ];
     }

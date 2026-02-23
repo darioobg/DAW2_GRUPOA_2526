@@ -21,7 +21,7 @@ class EquipoService
         $equipos = $this->repo->obtenerTodos();
 
         return $equipos
-            ->map(fn (Equipo $e) => $this->toViewModel($e))
+            ->map(fn(Equipo $e) => $this->toViewModel($e))
             ->toArray();
     }
 
@@ -39,12 +39,30 @@ class EquipoService
         return $this->toViewModel($equipo);
     }
 
+    public function listarPorUsuario(int $userId): array
+    {
+        $registros = $this->repo->obtenerPorUsuario($userId);
+
+        return $registros->map(function ($ue) {
+            return [
+                'id' => $ue->equipo->id,
+                'nombre' => $ue->equipo->nombre,
+                'descripcion' => $ue->equipo->descripcion,
+                'miRol' => [
+                    'id' => $ue->rol_equipo->id,
+                    'nombre' => $ue->rol_equipo->nombre,
+                ],
+                'fechaAlta' => $ue->fecha_alta?->toDateString(),
+            ];
+        })->toArray();
+    }
+
     /**
      * Crea un equipo con validación básica de negocio
      */
     public function crear(array $datos): array
     {
-        $idEmpresa = (int)($datos['id_empresa'] ?? 0);
+        $idEmpresa = (int) ($datos['id_empresa'] ?? 0);
         if ($idEmpresa <= 0) {
             throw new Exception('El id_empresa es obligatorio.');
         }
@@ -60,11 +78,11 @@ class EquipoService
         }
 
         $nuevo = $this->repo->crear([
-            'id_empresa'     => $idEmpresa,
-            'nombre'         => $nombre,
-            'descripcion'    => $datos['descripcion'] ?? null,
+            'id_empresa' => $idEmpresa,
+            'nombre' => $nombre,
+            'descripcion' => $datos['descripcion'] ?? null,
             'fecha_creacion' => $datos['fecha_creacion'] ?? now()->toDateString(),
-            'activo'         => (bool)$activo,
+            'activo' => (bool) $activo,
         ]);
 
         return $this->toViewModel($nuevo);
@@ -83,19 +101,21 @@ class EquipoService
         $payload = [];
 
         if (array_key_exists('id_empresa', $datos)) {
-            $idEmpresa = (int)$datos['id_empresa'];
-            if ($idEmpresa <= 0) throw new Exception('id_empresa inválido.');
+            $idEmpresa = (int) $datos['id_empresa'];
+            if ($idEmpresa <= 0)
+                throw new Exception('id_empresa inválido.');
             $payload['id_empresa'] = $idEmpresa;
         }
 
         if (array_key_exists('nombre', $datos)) {
-            $nombre = trim((string)$datos['nombre']);
-            if ($nombre === '') throw new Exception('El nombre no puede estar vacío.');
+            $nombre = trim((string) $datos['nombre']);
+            if ($nombre === '')
+                throw new Exception('El nombre no puede estar vacío.');
             $payload['nombre'] = $nombre;
         }
 
         if (array_key_exists('descripcion', $datos)) {
-            $payload['descripcion'] = $datos['descripcion']; // puede ser null
+            $payload['descripcion'] = $datos['descripcion'];  // puede ser null
         }
 
         if (array_key_exists('fecha_creacion', $datos)) {
@@ -107,7 +127,7 @@ class EquipoService
             if (!is_bool($activo) && !in_array($activo, [0, 1, '0', '1'], true)) {
                 throw new Exception('El campo activo debe ser boolean.');
             }
-            $payload['activo'] = (bool)$activo;
+            $payload['activo'] = (bool) $activo;
         }
 
         $editado = $this->repo->actualizar($id, $payload);
@@ -130,24 +150,18 @@ class EquipoService
         }
     }
 
-    /**
-     * ViewModel para frontend
-     */
     private function toViewModel(Equipo $e): array
     {
         return [
-            'id'            => $e->id,
-            'idEmpresa'     => $e->id_empresa,
-            'nombre'        => $e->nombre,
-            'descripcion'   => $e->descripcion,
-            'fechaCreacion' => $e->fecha_creacion?->toDateString(),
-            'activo'        => (bool)$e->activo,
-            'creadoHace'    => $e->created_at
-                ? Carbon::parse($e->created_at)->diffForHumans()
-                : null,
+            'id' => $e->id,
+            'nombre' => $e->nombre,
+            'descripcion' => $e->descripcion,
         ];
     }
 
+    /**
+     * ViewModel para frontend
+     */
     private function parseDateOrThrow($value, string $campo): string
     {
         if ($value === null || $value === '') {

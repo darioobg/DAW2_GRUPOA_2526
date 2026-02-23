@@ -17,6 +17,14 @@ class TareaRepository
         return Tarea::find($id);
     }
 
+    public function obtenerPorUsuario(int $userId)
+    {
+        return Tarea::with(['estado_tarea', 'prioridad', 'proyecto'])
+            ->where('id_asignado_a', $userId)
+            ->orderBy('orden_kanban')
+            ->get();
+    }
+
     public function crear(array $datos): Tarea
     {
         return Tarea::create($datos);
@@ -25,7 +33,8 @@ class TareaRepository
     public function actualizar(int $id, array $datos): ?Tarea
     {
         $tarea = Tarea::find($id);
-        if (!$tarea) return null;
+        if (!$tarea)
+            return null;
 
         $tarea->update($datos);
         return $tarea->fresh();
@@ -34,7 +43,8 @@ class TareaRepository
     public function eliminar(int $id): bool
     {
         $tarea = Tarea::find($id);
-        if (!$tarea) return false;
+        if (!$tarea)
+            return false;
 
         return (bool) $tarea->delete();
     }

@@ -1,26 +1,50 @@
+import { useContext } from "react";
+import { SeguridadContext } from "../../contexts/SeguridadProvider";
 import KanbanColumna from "./KanbanColumna";
+
 function KanbanBoard({
   columnas,
-  tareas,
   getTareasPorColumna,
   onDragStart,
   onDrop,
   onDragOver,
   onNuevaTarea,
+  onAbrirDetalle,
+  onNuevaColumna,
+  onEditarColumna,
+  onEliminarColumna,
 }) {
+  const { datos } = useContext(SeguridadContext);
+
+  const esAdmin = datos?.rolActivo === "ADMIN";
+
   return (
-    <div className="row g-4">
+    <div className="kanban-wrapper">
       {columnas.map((columna) => (
         <KanbanColumna
-          key={columna.key}
+          key={columna.id}
           columna={columna}
-          tareas={getTareasPorColumna(columna.key)}
+          tareas={getTareasPorColumna(columna.id)}
           onDragStart={onDragStart}
           onDrop={onDrop}
           onDragOver={onDragOver}
-          onNuevaTarea={onNuevaTarea} // 👈 ESTO FALTABA
+          onNuevaTarea={onNuevaTarea}
+          onAbrirDetalle={onAbrirDetalle}
+          onEditarColumna={onEditarColumna}
+          onEliminarColumna={onEliminarColumna}
         />
       ))}
+
+      {esAdmin && (
+        <div className="kanban-column kanban-column--add">
+          <button
+            className="btn btn-outline-success w-100"
+            onClick={onNuevaColumna}
+          >
+            + Agregar columna
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -21,8 +21,18 @@ class UsuarioEquipoService
         $items = $this->repo->obtenerTodos();
 
         return $items
-            ->map(fn (UsuarioEquipo $u) => $this->toViewModel($u))
+            ->map(fn(UsuarioEquipo $u) => $this->toViewModel($u))
             ->toArray();
+    }
+
+    private function mapearEntrada(array $data): array
+    {
+        return [
+            'id_usuario' => $data['idUsuario'] ?? null,
+            'id_equipo' => $data['idEquipo'] ?? null,
+            'id_rol_equipo' => $data['idRol'] ?? null,
+            'fecha_alta' => $data['fechaAlta'] ?? null,
+        ];
     }
 
     /**
@@ -44,20 +54,21 @@ class UsuarioEquipoService
      */
     public function crear(array $datos): array
     {
+        $datos = $this->mapearEntrada($datos);
         // id_usuario
-        $idUsuario = (int)($datos['id_usuario'] ?? 0);
+        $idUsuario = (int) ($datos['id_usuario'] ?? 0);
         if ($idUsuario <= 0) {
             throw new Exception('El id_usuario es obligatorio.');
         }
 
         // id_equipo
-        $idEquipo = (int)($datos['id_equipo'] ?? 0);
+        $idEquipo = (int) ($datos['id_equipo'] ?? 0);
         if ($idEquipo <= 0) {
             throw new Exception('El id_equipo es obligatorio.');
         }
 
         // id_rol_equipo
-        $idRol = (int)($datos['id_rol_equipo'] ?? 0);
+        $idRol = (int) ($datos['id_rol_equipo'] ?? 0);
         if ($idRol <= 0) {
             throw new Exception('El id_rol_equipo es obligatorio.');
         }
@@ -67,14 +78,14 @@ class UsuarioEquipoService
         $fechaAlta = $this->parseDateOrThrow($fechaAlta, 'fecha_alta');
 
         // activo
-        $activo = (bool)($datos['activo'] ?? true);
+        $activo = (bool) ($datos['activo'] ?? true);
 
         $nuevo = $this->repo->crear([
-            'id_usuario'    => $idUsuario,
-            'id_equipo'     => $idEquipo,
+            'id_usuario' => $idUsuario,
+            'id_equipo' => $idEquipo,
             'id_rol_equipo' => $idRol,
-            'fecha_alta'    => $fechaAlta,
-            'activo'        => $activo,
+            'fecha_alta' => $fechaAlta,
+            'activo' => $activo,
         ]);
 
         return $this->toViewModel($nuevo);
@@ -85,6 +96,7 @@ class UsuarioEquipoService
      */
     public function actualizar(int $idUsuario, int $idEquipo, array $datos): array
     {
+        $datos = $this->mapearEntrada($datos);
         $actual = $this->repo->obtenerPorIds($idUsuario, $idEquipo);
 
         if (!$actual) {
@@ -95,7 +107,7 @@ class UsuarioEquipoService
 
         // id_rol_equipo
         if (array_key_exists('id_rol_equipo', $datos)) {
-            $idRol = (int)$datos['id_rol_equipo'];
+            $idRol = (int) $datos['id_rol_equipo'];
             if ($idRol <= 0) {
                 throw new Exception('id_rol_equipo inválido.');
             }
@@ -109,7 +121,7 @@ class UsuarioEquipoService
 
         // activo
         if (array_key_exists('activo', $datos)) {
-            $payload['activo'] = (bool)$datos['activo'];
+            $payload['activo'] = (bool) $datos['activo'];
         }
 
         $editado = $this->repo->actualizar($idUsuario, $idEquipo, $payload);
@@ -140,12 +152,12 @@ class UsuarioEquipoService
     {
         return [
             'idUsuario' => $u->id_usuario,
-            'idEquipo'  => $u->id_equipo,
-            'idRol'     => $u->id_rol_equipo,
+            'idEquipo' => $u->id_equipo,
+            'idRol' => $u->id_rol_equipo,
             'fechaAlta' => $u->fecha_alta
                 ? Carbon::parse($u->fecha_alta)->toDateString()
                 : null,
-            'activo'    => (bool)$u->activo,
+            'activo' => (bool) $u->activo,
         ];
     }
 

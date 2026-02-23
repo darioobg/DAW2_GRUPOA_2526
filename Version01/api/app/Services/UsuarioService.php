@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 use Exception;
 
 class UsuarioService
@@ -14,12 +14,25 @@ class UsuarioService
         private UserRepository $repo
     ) {}
 
+    private function normalizarEntrada(array $datos): array
+    {
+        return [
+            'name' => $datos['name'] ?? null,
+            'apellidos' => $datos['apellidos'] ?? null,
+            'email' => $datos['email'] ?? null,
+            'password' => $datos['password'] ?? null,
+            'fecha_registro' => $datos['fechaRegistro'] ?? null,
+            'ultimo_acceso' => $datos['ultimoAcceso'] ?? null,
+            'activo' => $datos['activo'] ?? true,
+        ];
+    }
+
     public function listar(): array
     {
         $usuarios = $this->repo->obtenerTodos();
 
         return $usuarios
-            ->map(fn (User $u) => $this->toViewModel($u))
+            ->map(fn(User $u) => $this->toViewModel($u))
             ->toArray();
     }
 
@@ -36,6 +49,8 @@ class UsuarioService
 
     public function crear(array $datos): array
     {
+        $datos = $this->normalizarEntrada($datos);
+
         $nombre = trim($datos['name'] ?? '');
         if ($nombre === '') {
             throw new Exception('El nombre es obligatorio.');
@@ -54,24 +69,24 @@ class UsuarioService
             throw new Exception('El email no tiene un formato válido.');
         }
 
-        $password = (string)($datos['password'] ?? '');
+        $password = (string) ($datos['password'] ?? '');
         if (strlen($password) < 8) {
             throw new Exception('La contraseña debe tener al menos 8 caracteres.');
         }
 
-        $activo = $datos['activo'] ?? true;
+        $activo = $datos['activo'];
         if (!is_bool($activo) && !in_array($activo, [0, 1, '0', '1'], true)) {
             throw new Exception('El campo activo debe ser boolean.');
         }
 
         $nuevo = $this->repo->crear([
-            'name'           => $nombre,
-            'apellidos'      => $apellidos,
-            'email'          => $email,
-            'password'       => Hash::make($password),
+            'name' => $nombre,
+            'apellidos' => $apellidos,
+            'email' => $email,
+            'password' => Hash::make($password),
             'fecha_registro' => $datos['fecha_registro'] ?? now()->toDateString(),
-            'ultimoAcceso'   => $datos['ultimo_acceso'] ?? null,
-            'activo'         => (bool)$activo,
+            'ultimo_acceso' => $datos['ultimo_acceso'],
+            'activo' => (bool) $activo,
         ]);
 
         return $this->toViewModel($nuevo);
@@ -79,6 +94,7 @@ class UsuarioService
 
     public function actualizar(int $id, array $datos): array
     {
+        $datos = $this->normalizarEntrada($datos);
         $actual = $this->repo->obtenerPorId($id);
         if (!$actual) {
             throw new Exception('Usuario no encontrado.');
@@ -87,20 +103,23 @@ class UsuarioService
         $payload = [];
 
         if (array_key_exists('name', $datos)) {
-            $nombre = trim((string)$datos['name']);
-            if ($nombre === '') throw new Exception('El nombre no puede estar vacío.');
+            $nombre = trim((string) $datos['name']);
+            if ($nombre === '')
+                throw new Exception('El nombre no puede estar vacío.');
             $payload['name'] = $nombre;
         }
 
         if (array_key_exists('apellidos', $datos)) {
-            $apellidos = trim((string)$datos['apellidos']);
-            if ($apellidos === '') throw new Exception('Los apellidos no pueden estar vacíos.');
+            $apellidos = trim((string) $datos['apellidos']);
+            if ($apellidos === '')
+                throw new Exception('Los apellidos no pueden estar vacíos.');
             $payload['apellidos'] = $apellidos;
         }
 
         if (array_key_exists('email', $datos)) {
-            $email = trim((string)$datos['email']);
-            if ($email === '') throw new Exception('El email no puede estar vacío.');
+            $email = trim((string) $datos['email']);
+            if ($email === '')
+                throw new Exception('El email no puede estar vacío.');
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 throw new Exception('El email no tiene un formato válido.');
             }
@@ -108,7 +127,7 @@ class UsuarioService
         }
 
         if (array_key_exists('password', $datos)) {
-            $password = (string)$datos['password'];
+            $password = (string) $datos['password'];
             if (strlen($password) < 8) {
                 throw new Exception('La contraseña debe tener al menos 8 caracteres.');
             }
@@ -131,7 +150,7 @@ class UsuarioService
             if (!is_bool($activo) && !in_array($activo, [0, 1, '0', '1'], true)) {
                 throw new Exception('El campo activo debe ser boolean.');
             }
-            $payload['activo'] = (bool)$activo;
+            $payload['activo'] = (bool) $activo;
         }
 
         $editado = $this->repo->actualizar($id, $payload);
@@ -154,14 +173,14 @@ class UsuarioService
     private function toViewModel(User $u): array
     {
         return [
-            'id'           => $u->id,
-            'name'         => $u->name,
-            'apellidos'    => $u->apellidos,
-            'email'        => $u->email,
-            'fechaRegistro'=> $this->formatDate($u->fecha_registro ?? $u->fechaRegistro ?? null),
+            'id' => $u->id,
+            'name' => $u->name,
+            'apellidos' => $u->apellidos,
+            'email' => $u->email,
+            'fechaRegistro' => $this->formatDate($u->fecha_registro ?? $u->fechaRegistro ?? null),
             'ultimoAcceso' => $this->formatDate($u->ultimo_acceso ?? $u->ultimoAcceso ?? null),
-            'activo'       => (bool)$u->activo,
-            'creadoHace'   => $u->created_at
+            'activo' => (bool) $u->activo,
+            'creadoHace' => $u->created_at
                 ? Carbon::parse($u->created_at)->diffForHumans()
                 : null,
         ];
@@ -182,7 +201,8 @@ class UsuarioService
 
     private function formatDate($value): ?string
     {
-        if ($value === null) return null;
+        if ($value === null)
+            return null;
 
         if ($value instanceof \Carbon\Carbon) {
             return $value->toDateString();

@@ -113,4 +113,19 @@ class ProyectoRepository
 
         return (bool) $proyecto->delete();
     }
+
+    public function obtenerPorUsuario(int $userId)
+    {
+        return Proyecto::with([
+            'equipo',
+            'estado_proyecto',
+            'tareas'
+        ])
+            ->whereHas('equipo.usuarios', function ($q) use ($userId) {
+                $q
+                    ->where('usuario_equipo.id_usuario', $userId)
+                    ->where('usuario_equipo.activo', true);
+            })
+            ->get();
+    }
 }

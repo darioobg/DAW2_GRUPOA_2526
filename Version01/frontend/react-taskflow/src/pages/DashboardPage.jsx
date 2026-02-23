@@ -1,66 +1,17 @@
-import { useEffect, useState } from "react";
-import NegocioProyectos from "../core/Negocio";
-import ProyectosDestacados from "../components/ProyectosDestacados";
-import ProyectoGrid from "../components/ProyectoGrid";
-import ProyectoModal from "../components/ProyectoModal";
+import { useContext } from "react";
+import { SeguridadContext } from "../contexts/SeguridadProvider";
 
-function DashboardPage() {
-  const [proyectos, setProyectos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+import DashboardHomePage from "../pages/dashboard/DashboardHomePage";
+import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalInitialData, setModalInitialData] = useState(null);
+export default function DashboardPage() {
+  const { datos } = useContext(SeguridadContext);
 
-  useEffect(() => {
-    cargarProyectos();
-  }, []);
+  if (!datos?.usuario) return null;
 
-  async function cargarProyectos() {
-    try {
-      const data = await NegocioProyectos.obtenerProyectos();
-      setProyectos(data);
-    } catch {
-      setError("Error cargando proyectos");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function openCreateModal() {
-    setModalInitialData(null);
-    setShowModal(true);
-  }
-
-  function openEditModal(proyecto) {
-    setModalInitialData(proyecto);
-    setShowModal(true);
-  }
-
-  return (
-    <>
-      <ProyectosDestacados
-        proyectos={proyectos}
-        loading={loading}
-        error={error}
-        onEdit={openEditModal}
-      />
-
-      <ProyectoGrid
-        proyectos={proyectos}
-        loading={loading}
-        error={error}
-        onCreate={openCreateModal}
-        onEdit={openEditModal}
-      />
-
-      <ProyectoModal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        initialData={modalInitialData}
-      />
-    </>
+  return datos.rolActivo === "ADMIN" ? (
+    <AdminDashboardPage />
+  ) : (
+    <DashboardHomePage />
   );
 }
-
-export default DashboardPage;

@@ -13,8 +13,8 @@ return new class extends Migration {
             $table->string('nombre');
             $table->text('descripcion');
             $table->date('fecha_creacion');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin_prevista');
+            $table->date('fecha_inicio')->nullable();;
+            $table->date('fecha_fin_prevista')->nullable();;
 
             $table->timestamps();
 
@@ -22,12 +22,14 @@ return new class extends Migration {
             $table
                 ->foreignId('id_equipo')
                 ->constrained('equipo')
-                ->onDelete('cascade')->onUpdateCascade();
+                ->onDelete('cascade')
+                ->onUpdateCascade();
 
             $table
                 ->foreignId('id_estado_proyecto')
                 ->constrained('estado_proyecto')
-                ->onDelete('restrict')->onUpdateCascade();
+                ->onDelete('restrict')
+                ->onUpdateCascade();
         });
     }
 

@@ -54,4 +54,13 @@ class ProyectoController extends Controller
         $this->service->eliminar($id);
         return response()->json(['message' => 'Proyecto eliminado correctamente.'], 200);
     }
+
+    public function misProyectos(): JsonResponse
+    {
+        $userId = auth()->id();
+
+        return response()->json(
+            $this->service->listarPorUsuario($userId)
+        );
+    }
 }

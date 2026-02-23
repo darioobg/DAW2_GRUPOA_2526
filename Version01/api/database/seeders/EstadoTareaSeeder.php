@@ -2,41 +2,45 @@
 
 namespace Database\Seeders;
 
+use App\Models\EstadoTarea;
+use App\Models\Proyecto;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class EstadoTareaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        DB::table('estado_tarea')->insert([
-            [
-                'nombre' => 'Pendiente',
-                'orden' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nombre' => 'En Progreso',
-                'orden' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nombre' => 'Completada',
-                'orden' => 3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nombre' => 'Bloqueada',
-                'orden' => 4,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+        $proyectos = Proyecto::all();
+
+        foreach ($proyectos as $proyecto) {
+            // ⚠️ Evitar duplicados si el seeder corre más de una vez
+            if ($proyecto->estadoTareas()->count() > 0) {
+                continue;
+            }
+
+            EstadoTarea::insert([
+                [
+                    'nombre' => 'Pendiente',
+                    'orden' => 1,
+                    'id_proyecto' => $proyecto->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'nombre' => 'En Progreso',
+                    'orden' => 2,
+                    'id_proyecto' => $proyecto->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'nombre' => 'Finalizado',
+                    'orden' => 3,
+                    'id_proyecto' => $proyecto->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }
