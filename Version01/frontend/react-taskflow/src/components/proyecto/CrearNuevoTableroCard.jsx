@@ -1,13 +1,8 @@
 function CrearNuevoTableroCard({ onClick }) {
   return (
     <div
-      className="card h-100 d-flex justify-content-center align-items-center"
-      style={{
-        cursor: "pointer",
-        border: "2px dashed #b2bec3",
-        color: "#636e72",
-        minHeight: 170,
-      }}
+      className="card h-100 d-flex justify-content-center align-items-center nuevo"
+    
       onClick={onClick}
     >
       <div className="text-center">
