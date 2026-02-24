@@ -1,0 +1,66 @@
+name: CI Intermodular Laravel + React
+
+on:
+  push:
+    branches:
+      - main
+      - jino
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  backend:
+    name: Backend Laravel
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Version01/api
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, pdo, pdo_mysql
+          coverage: none
+
+      - name: Instalar dependencias Composer
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Copiar archivo .env
+        run: cp .env.example .env
+
+      - name: Generar APP_KEY
+        run: php artisan key:generate
+
+      - name: Ejecutar tests
+        run: php artisan test
+
+  frontend:
+    name: Frontend React
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Version01/frontend/react-taskflow
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Build del proyecto
+        run: npm run build
