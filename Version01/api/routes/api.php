@@ -28,6 +28,12 @@ Route::prefix('v1')->group(function () {
     Route::get('test', function () {
         throw new \Exception('TEST API');
     });
+
+    Route::get('health', function () {
+        return response()->json([
+            'status' => 'ok'
+        ]);
+    });
     // ==========================================
     //            RUTAS PÚBLICAS
     // ==========================================
