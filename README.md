@@ -64,9 +64,9 @@ Version01/
 ├── api/                    # Backend Laravel (API REST)
 ├── frontend/
 │   └── react-taskflow/     # Frontend React
-├──Script
-    └── deploy.sh  [Script de despliegue](Version01/deploy.sh)              # Script automático de despliegue
-└── README.md
+README.md
+Scripts
+    └── deploy.sh  [Scripts](Scripts/deploy.sh)  # Script automático de despliegue
 ```
 
 ---
