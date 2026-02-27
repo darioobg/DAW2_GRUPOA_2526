@@ -66,7 +66,7 @@ Version01/
 │   └── react-taskflow/     # Frontend React
 README.md
 Scripts
-    └── deploy.sh  [Scripts](Scripts/deploy.sh)  # Script automático de despliegue
+    └── deploy.sh  [https://github.com/darioobg/DAW2_GRUPOA_2526/tree/1d55237c3e6194a49ad24428be1fc33c72d0e2c7/Scripts](Scripts/deploy.sh)  # Script automático de despliegue
 ```
 
 ---
