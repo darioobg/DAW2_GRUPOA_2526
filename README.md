@@ -80,7 +80,7 @@ DOCUMENTACION
 ### 📚 Documentación
 - [Carpeta DOCUMENTACION](DOCUMENTACION/)
 - [Memoria del proyecto](DOCUMENTACION/TaskFlow.docx)
-- [Link Figma](DOCUMENTACION/)
+- [Link Figma](DOCUMENTACION/Link Figma.txt)
 
 
 ## ⚙️ Instalación en entorno local
