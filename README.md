@@ -58,7 +58,6 @@ La comunicación entre frontend y backend se realiza mediante peticiones HTTP si
 ---
 
 ## 📁 Estructura del repositorio
-
 ```
 Version01/
 ├── api/                    # Backend Laravel (API REST)
@@ -66,10 +65,22 @@ Version01/
 │   └── react-taskflow/     # Frontend React
 README.md
 Scripts
-    └── deploy.sh  [https://github.com/darioobg/DAW2_GRUPOA_2526/tree/1d55237c3e6194a49ad24428be1fc33c72d0e2c7/Scripts](Scripts/deploy.sh)  # Script automático de despliegue
+    └── deploy.sh   # Script automático de despliegue
+DOCUMENTACION
+    └──TaskFlow.pdf
 ```
 
 ---
+## 📂 Recursos del proyecto
+
+### ⚙️ Scripts
+- [Carpeta Scripts](Scripts/)
+- [Script de despliegue automático](Scripts/deploy.sh)
+
+### 📚 Documentación
+- [Carpeta DOCUMENTACION](DOCUMENTACION/)
+- [Memoria del proyecto (Word)](DOCUMENTACION/TaskFlow.pdf)
+
 
 ## ⚙️ Instalación en entorno local
 
