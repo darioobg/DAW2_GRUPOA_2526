@@ -197,6 +197,7 @@ El script automatiza completamente el proceso de despliegue:
 ## 👨‍💻 Autor
 
 Proyecto desarrollado con fines académicos dentro del ciclo formativo de Desarrollo de Aplicaciones Web (DAW).
+
 | 👤 **Darío Briongos García**  
 | 📝 **Maria Colio Tresgallo**  
 | 📌 **Raul Calderon Gómez**
