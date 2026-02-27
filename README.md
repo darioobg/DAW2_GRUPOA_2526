@@ -79,7 +79,7 @@ DOCUMENTACION
 
 ### 📚 Documentación
 - [Carpeta DOCUMENTACION](DOCUMENTACION/)
-- [Memoria del proyecto](DOCUMENTACION/TaskFlow.pdf)
+- [Memoria del proyecto](DOCUMENTACION/TaskFlow.docx)
 - [Link Figma](DOCUMENTACION/)
 
 
