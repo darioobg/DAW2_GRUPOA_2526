@@ -114,7 +114,7 @@ php artisan serve
 La API quedará disponible en:
 
 ```
-http://localhost:8000
+http://ip:8000
 ```
 
 ### 3. Frontend (React)
