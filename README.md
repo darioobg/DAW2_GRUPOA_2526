@@ -79,8 +79,9 @@ DOCUMENTACION       #Documentacion
 
 ### 📚 Documentación
 - [Carpeta DOCUMENTACION](DOCUMENTACION/)
-- [Memoria del proyecto](DOCUMENTACION/TaskFlow.docx)
+- [Memoria del proyecto](DOCUMENTACION/TaskFlow.pdf)
 - [Link Figma](DOCUMENTACION/LinkFigma.txt)
+- [Diagramas Clase y entidad relación](DOCUMENTACION/Fuentes/DiagramasEntidadRelacionClases)
 
 
 ## ⚙️ Instalación en entorno local
