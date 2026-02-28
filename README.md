@@ -82,6 +82,8 @@ DOCUMENTACION       #Documentacion
 - [Memoria del proyecto](DOCUMENTACION/TaskFlow.pdf)
 - [Link Figma](DOCUMENTACION/LinkFigma.txt)
 - [Diagramas Clase y entidad relación](DOCUMENTACION/Fuentes/DiagramasEntidadRelacionClases)
+- [Diagramas](DOCUMENTACION/Fuentes/Diagramas)
+- [Hojas de Calculo](DOCUMENTACION/Fuentes/HojasdeCalculo)
 
 
 ## ⚙️ Instalación en entorno local
