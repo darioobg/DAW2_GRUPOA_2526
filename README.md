@@ -82,6 +82,8 @@ DOCUMENTACION       #Documentacion
 - [Memoria del proyecto](DOCUMENTACION/TaskFlow.pdf)
 - [Link Figma](DOCUMENTACION/LinkFigma.txt)
 - [Diagramas Clase y entidad relación](DOCUMENTACION/Fuentes/DiagramasEntidadRelacionClases)
+- [Diagramas](DOCUMENTACION/Fuentes/Diagramas)
+- [Hojas de Calculo](DOCUMENTACION/Fuentes/HojasdeCalculo)
 
 
 ## ⚙️ Instalación en entorno local
@@ -112,7 +114,7 @@ php artisan serve
 La API quedará disponible en:
 
 ```
-http://localhost:8000
+http://ip:8000
 ```
 
 ### 3. Frontend (React)
