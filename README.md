@@ -84,6 +84,7 @@ DOCUMENTACION       #Documentacion
 - [Diagramas Clase y entidad relación](DOCUMENTACION/Fuentes/DiagramasEntidadRelacionClases)
 - [Diagramas](DOCUMENTACION/Fuentes/Diagramas)
 - [Hojas de Calculo](DOCUMENTACION/Fuentes/HojasdeCalculo)
+- [Memoia Tecnica](DOCUMENTACION/Memoria_Tecnica_Taskflow.pdf)
 
 
 ## ⚙️ Instalación en entorno local
