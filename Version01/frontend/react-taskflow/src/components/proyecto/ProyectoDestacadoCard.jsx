@@ -49,10 +49,6 @@ function ProyectoDestacadoCard({ proyecto, onEdit }) {
       <div className="card-body">
         <h5 className="card-title mb-1">{nombre}</h5>
 
-        <p className="card-text text-muted descripcion-truncada">
-          {descripcion}
-        </p>
-
         <div className="project-dates mt-3">
           {fecha_inicio && (
             <div>

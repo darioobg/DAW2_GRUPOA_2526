@@ -380,4 +380,32 @@
 
 
 
+body {
+  height: 100vh;
+  overflow: hidden;
+}
 
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  background: linear-gradient(135deg, #0d6efd, #1e3a8a);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+.form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+}

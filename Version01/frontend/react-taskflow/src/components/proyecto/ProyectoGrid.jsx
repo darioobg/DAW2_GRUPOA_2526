@@ -15,37 +15,53 @@ function ProyectoGrid({
   const esAdmin = datos?.rolActivo === "ADMIN";
 
   return (
-    <section>
-      <div className="mb-3 d-flex align-items-center justify-content-between">
+    <section className="mt-3">
+      <div className="mb-4">
         <h4 className="fw-bold mb-0">Tus Espacios de Trabajo</h4>
       </div>
 
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        {/* Solo los administradores ven la card para crear tablero */}
+      <div className="row g-4">
+        {/* Card Crear */}
         {esAdmin && (
-          <div className="col">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
             <CrearNuevoTableroCard onClick={onCreate} />
           </div>
         )}
 
+        {/* Loading */}
         {loading && (
-          <div className="col">
-            <div className="text-muted py-4">Cargando proyectos...</div>
+          <div className="col-12">
+            <div
+              className="p-5 rounded-4 text-center text-muted"
+              style={{ backgroundColor: "#f3f4f6" }}
+            >
+              Cargando proyectos...
+            </div>
           </div>
         )}
 
+        {/* Error */}
         {error && (
-          <div className="col">
-            <div className="text-danger py-4">{error}</div>
+          <div className="col-12">
+            <div
+              className="p-5 rounded-4 text-center text-danger"
+              style={{ backgroundColor: "#f3f4f6" }}
+            >
+              {error}
+            </div>
           </div>
         )}
 
+        {/* Proyectos */}
         {!loading &&
           !error &&
           proyectos &&
           proyectos.length > 0 &&
           proyectos.map((proyecto) => (
-            <div key={proyecto.id} className="col">
+            <div
+              key={proyecto.id}
+              className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+            >
               <ProyectoCard
                 proyecto={proyecto}
                 onEdit={() => onEdit(proyecto)}
@@ -54,9 +70,15 @@ function ProyectoGrid({
             </div>
           ))}
 
+        {/* Vacío */}
         {!loading && !error && proyectos && proyectos.length === 0 && (
-          <div className="col">
-            <div className="text-muted py-4">Aún no tienes proyectos.</div>
+          <div className="col-12">
+            <div
+              className="p-5 rounded-4 text-center text-muted"
+              style={{ backgroundColor: "#f3f4f6" }}
+            >
+              Aún no tienes proyectos.
+            </div>
           </div>
         )}
       </div>

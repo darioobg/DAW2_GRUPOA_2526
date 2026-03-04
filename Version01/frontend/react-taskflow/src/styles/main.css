@@ -305,7 +305,7 @@ body {
 }
 
 .proyecto-card-header {
-  height: 120px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -744,4 +744,125 @@ body {
         min-height: 170,
 }
 
- 
+ body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  background: linear-gradient(135deg, #0d6efd, #1e3a8a);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+.form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+}
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.005);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.table tbody tr {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.01);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+}
+.row.rounded-4:hover {
+  background-color: #f8f9fa !important;
+  transform: translateY(-1px);
+}
+/* Transición suave */
+.btn-edit,
+.btn-delete {
+  transition: all 0.25s ease;
+}
+
+/* Hover Editar */
+.btn-edit:hover {
+  background-color: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+  box-shadow: 0 6px 14px rgba(13, 110, 253, 0.25);
+}
+
+/* Hover Eliminar */
+.btn-delete:hover {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+  box-shadow: 0 6px 14px rgba(220, 53, 69, 0.25);
+}
+.proyecto-card {
+  transition: all 0.25s ease;
+}
+
+.proyecto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.proyecto-card-letter {
+  font-size: 3rem;
+  opacity: 0.9;
+}
+.crear-card {
+  transition: all 0.25s ease;
+}
+
+.crear-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.crear-card:hover .bi-plus-lg {
+  transform: scale(1.1);
+}
+
+.crear-card .bi-plus-lg {
+  transition: all 0.25s ease;
+}
+.metric-card {
+  transition: all 0.25s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.metric-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 1.2rem;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}

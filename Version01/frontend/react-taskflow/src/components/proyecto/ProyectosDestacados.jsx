@@ -1,7 +1,7 @@
 import ProyectoDestacadoCard from "./ProyectoDestacadoCard";
 
 function ProyectosDestacados({ proyectos, loading, error, onEdit }) {
-  const destacados = Array.isArray(proyectos) ? proyectos.slice(0, 2) : [];
+  const destacados = Array.isArray(proyectos) ? proyectos.slice(0, 4) : [];
 
   return (
     <section className="mb-5">

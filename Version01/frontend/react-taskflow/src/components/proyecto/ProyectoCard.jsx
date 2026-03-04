@@ -13,8 +13,8 @@ function ProyectoCard({ proyecto, onEdit, onArchive }) {
     navigate(`/tableros/${id}`);
   };
 
-  const handleArchiveClick = () => {
-    if (!onArchive) return;
+  const handleArchiveClick = (e) => {
+    e.stopPropagation();
 
     if (
       window.confirm(`¿Archivar "${nombre}"? Esta acción no se puede deshacer.`)
@@ -24,39 +24,51 @@ function ProyectoCard({ proyecto, onEdit, onArchive }) {
   };
 
   return (
-    <div className="card proyecto-card shadow-sm h-100 position-relative">
-      {/* Editar: solo visible para ADMIN */}
-      {esAdmin && (
-        <button
-          className="btn btn-light btn-sm proyecto-edit-btn"
-          onClick={() => onEdit(id)}
-        >
-          <i className="bi bi-pencil"></i>
-        </button>
-      )}
-
-      {/* Archivar: solo visible para ADMIN */}
-      {esAdmin && (
-        <button
-          className="btn btn-danger btn-sm proyecto-archive-btn"
-          onClick={handleArchiveClick}
-        >
-          <i className="bi bi-archive"></i>
-        </button>
-      )}
-
-      {/* Imagen clickable */}
+    <div className="card proyecto-card shadow-sm rounded-4 h-100 border-0 overflow-hidden">
+      {/* HEADER */}
       <div
-        className="proyecto-card-header"
-        style={{ backgroundColor: color || "#6c63ff" }}
+        className="proyecto-card-header position-relative d-flex align-items-center justify-content-center"
+        style={{
+          background: color
+            ? `linear-gradient(135deg, ${color}, #5a54f1)`
+            : "linear-gradient(135deg, #6c63ff, #5a54f1)",
+          height: "100px",
+          cursor: "pointer",
+        }}
         onClick={handleOpen}
       >
-        <span className="proyecto-card-letter">{nombre?.charAt(0)}</span>
+        {/* Letra */}
+        <span className="proyecto-card-letter text-white fw-bold">
+          {nombre?.charAt(0).toUpperCase()}
+        </span>
+
+        {/* Botones ADMIN */}
+        {esAdmin && (
+          <div className="position-absolute top-0 end-0 p-2 d-flex gap-2">
+            <button
+              className="btn btn-light btn-sm rounded-circle shadow-sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(id);
+              }}
+            >
+              <i className="bi bi-pencil"></i>
+            </button>
+
+            <button
+              className="btn btn-danger btn-sm rounded-circle shadow-sm"
+              onClick={handleArchiveClick}
+            >
+              <i className="bi bi-archive"></i>
+            </button>
+          </div>
+        )}
       </div>
 
+      {/* BODY */}
       <div className="card-body">
-        <h5 className="card-title">{nombre}</h5>
-        <p className="card-text text-muted">{descripcion}</p>
+        <h5 className="card-title fw-semibold mb-2">{nombre}</h5>
+        <p className="card-text text-muted small mb-0">{descripcion}</p>
       </div>
     </div>
   );
