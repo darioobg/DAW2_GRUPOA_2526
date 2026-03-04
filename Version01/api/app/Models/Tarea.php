@@ -37,6 +37,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tarea extends Model
 {
+	protected $table = 'tarea';
+
+	protected $casts = [
+		'id_proyectos' => 'int',
+		'id_prioridad' => 'int',
+		'id_asignado_a' => 'int',
+		'id_estado' => 'int',
+		'fecha_creacion' => 'datetime',
+		'fecha_limite' => 'datetime',
+		'fecha_cierre' => 'datetime',
+		'orden_kanban' => 'int'
+	];
+
 	protected $fillable = [
 		'id_proyectos',
 		'id_prioridad',
